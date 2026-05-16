@@ -1,0 +1,4369 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://kabanmochi-tech.github.io/baransu-salon/bod/ -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>講師紹介 | バランス大家大学 (BOD)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #14274E;
+    --navy-dark: #0B1936;
+    --navy-mid: #1F3A6B;
+    --navy-light: #E8ECF5;
+    --accent: #C8302C;
+    --accent-dark: #9E2522;
+    --accent-light: #FBE9E8;
+    --bg: #F2F0EC;
+    --slide-bg: #FFFFFF;
+    --text: #1a1a1a;
+    --text-muted: #5b5b5b;
+    --text-light: #999;
+    --border: #DDD;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === Key-message highlight: red underline emphasis === */
+  .accent {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.18em;
+    text-underline-offset: 0.18em;
+    text-decoration-skip-ink: none;
+  }
+
+  .presentation {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide-container {
+    width: min(96vw, calc(96vh * 16 / 9));
+    height: min(96vh, calc(96vw * 9 / 16));
+    background: var(--slide-bg);
+    border-radius: 12px;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    overflow: hidden;
+  }
+  .slide.active { display: block; animation: fadeIn 0.4s ease; }
+  .slide-fit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform-origin: top left;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* === Header bar === */
+  .top-bar {
+    background: linear-gradient(90deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 1.1vw 2.4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--accent);
+  }
+  .top-bar-left { display: flex; align-items: baseline; gap: 0.9vw; }
+  .top-bar-title { font-size: 1.64vw; font-weight: 700; letter-spacing: 0.04em; }
+  .top-bar-en { font-size: 1.17vw; color: rgba(255,255,255,0.7); letter-spacing: 0.18em; font-weight: 500; }
+  .top-bar-right { font-size: 1.11vw; color: rgba(255,255,255,0.85); letter-spacing: 0.08em; }
+  .top-bar-right .accent { color: #fff; font-weight: 700; }
+
+  /* === Body grid === */
+  .body-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 2.2vw;
+    padding: 2.2vw 2.6vw 1.8vw 2.6vw;
+    overflow: hidden;
+  }
+
+  /* === Left column: photo + name === */
+  .left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+  }
+
+  .photo-frame {
+    flex: 1;
+    background: var(--navy-dark);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 6px 24px rgba(20,39,78,0.25);
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 30px; height: 30px;
+    border-top: 4px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px 0 0 0;
+  }
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; right: -10px;
+    width: 30px; height: 30px;
+    border-bottom: 4px solid var(--accent);
+    border-right: 4px solid var(--accent);
+    border-radius: 0 0 4px 0;
+  }
+  .photo-icon { font-size: 4.21vw; opacity: 0.55; }
+  .photo-text { font-size: 1.22vw; color: var(--navy); margin-top: 0.6vw; letter-spacing: 0.1em; font-weight: 600; }
+  .photo-sub { font-size: 0.94vw; color: var(--text-muted); margin-top: 0.3vw; }
+
+  .name-block {
+    background: var(--navy);
+    color: #fff;
+    padding: 1.1vw 1.4vw;
+    border-radius: 10px;
+    border-left: 6px solid var(--accent);
+  }
+  .name-role { font-size: 1.01vw; color: rgba(255,255,255,0.7); letter-spacing: 0.18em; margin-bottom: 0.2vw; }
+  .name-jp { font-size: 2.22vw; font-weight: 800; letter-spacing: 0.05em; }
+  .name-en { font-size: 1.01vw; color: rgba(255,255,255,0.55); margin-top: 0.15vw; letter-spacing: 0.12em; }
+
+  /* === Right column: bio === */
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9vw;
+    overflow: hidden;
+  }
+
+  .catch {
+    font-size: 1.64vw;
+    font-weight: 700;
+    color: var(--navy-dark);
+    line-height: 1.35;
+    padding-bottom: 0.6vw;
+    border-bottom: 2px solid var(--navy-light);
+  }
+  .catch .accent { color: var(--accent); }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45vw;
+  }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 4.6vw 1fr;
+    gap: 0.8vw;
+    align-items: baseline;
+    font-size: 1.11vw;
+    line-height: 1.45;
+  }
+  .tl-age {
+    font-size: 1.17vw;
+    font-weight: 800;
+    color: var(--accent);
+    text-align: right;
+    letter-spacing: 0.02em;
+  }
+  .tl-text { color: var(--text); }
+  .tl-text strong { color: var(--navy-dark); }
+  .tl-text .num { color: var(--accent); font-weight: 700; }
+
+  .now-box {
+    margin-top: 0.3vw;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    padding: 0.95vw 1.2vw;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent);
+    display: flex;
+    gap: 1.6vw;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .now-label {
+    font-size: 0.94vw;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+  .now-item { display: flex; flex-direction: column; }
+  .now-key { font-size: 0.89vw; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; }
+  .now-val { font-size: 1.47vw; font-weight: 800; color: #fff; }
+  .now-val .unit { font-size: 1.01vw; font-weight: 600; color: rgba(255,255,255,0.85); margin-left: 0.15vw; }
+
+  .goal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8vw;
+  }
+  .goal-card, .community-card {
+    padding: 0.85vw 1.1vw;
+    border-radius: 8px;
+    font-size: 1.05vw;
+    line-height: 1.45;
+  }
+  .goal-card {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+  }
+  .goal-card .label { font-size: 0.89vw; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.15em; }
+  .goal-card .value { font-size: 1.22vw; font-weight: 700; color: var(--navy-dark); margin-top: 0.2vw; }
+  .goal-card .value .accent { color: var(--accent); }
+
+  .community-card {
+    background: var(--navy-light);
+    border-left: 4px solid var(--navy);
+  }
+  .community-card .label { font-size: 0.89vw; font-weight: 700; color: var(--navy); letter-spacing: 0.15em; }
+  .community-card .value { font-size: 1.05vw; color: var(--text); margin-top: 0.25vw; }
+  .community-card .value strong { color: var(--navy-dark); }
+
+  /* === Footer === */
+  .bottom-bar {
+    background: var(--navy-dark);
+    color: rgba(255,255,255,0.75);
+    padding: 0.7vw 2.4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.01vw;
+    letter-spacing: 0.1em;
+    border-top: 3px solid var(--accent);
+  }
+  .bottom-bar .brand { color: #fff; font-weight: 700; letter-spacing: 0.18em; }
+  .bottom-bar .brand .accent { color: #fff; }
+
+  /* === Navigation === */
+  .nav {
+    position: fixed; bottom: 16px; right: 24px;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.95);
+    padding: 8px 16px; border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+  }
+  .nav button { background: none; border: none; cursor: pointer; color: var(--text); font-size: 22px; padding: 8px 14px; border-radius: 6px; min-width: 44px; min-height: 44px; touch-action: manipulation; }
+  .nav button:hover { color: var(--accent); background: var(--accent-light); }
+  .nav button:active { background: var(--accent-light); }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+  .slide-counter { font-size: 15px; color: var(--text-muted); min-width: 64px; text-align: center; font-weight: 600; }
+
+  /* スマホでナビをより目立たせる */
+  @media (max-width: 768px) {
+    .nav {
+      bottom: 12px; right: 50%; transform: translateX(50%);
+      padding: 10px 18px; gap: 14px;
+    }
+    .nav button { font-size: 26px; padding: 10px 18px; min-width: 52px; min-height: 52px; }
+    .slide-counter { font-size: 17px; min-width: 72px; }
+    .help-hint { display: none; }
+  }
+
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+
+  .help-hint {
+    position: fixed; bottom: 16px; left: 24px;
+    font-size: 11px; color: var(--text-light);
+    background: rgba(255,255,255,0.8);
+    padding: 4px 10px; border-radius: 12px;
+    z-index: 100;
+  }
+
+  /* === Mission slide (Slide 2) === */
+  .mission-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6vw 2.6vw 1.2vw 2.6vw;
+    overflow: hidden;
+    gap: 0.9vw;
+  }
+  .mission-catch-wrap { text-align: center; }
+  .mission-catch {
+    font-size: 3.21vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+  }
+  .mission-catch .accent { color: var(--accent); }
+  .mission-sub {
+    font-size: 1.27vw;
+    color: var(--text-muted);
+    margin-top: 0.5vw;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.18fr 1fr;
+    gap: 0.4vw;
+    align-items: stretch;
+  }
+  .mc-card {
+    border-radius: 12px;
+    padding: 1.1vw 1.3vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45vw;
+    border: 2px solid;
+    min-height: 11vw;
+  }
+  .mc-card.have {
+    background: var(--navy-light);
+    border-color: var(--navy);
+  }
+  .mc-card.havenot {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .mc-icon {
+    font-size: 2.74vw;
+    line-height: 1;
+  }
+  .mc-tag {
+    font-size: 0.89vw;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+  }
+  .mc-card.have .mc-tag { color: var(--navy); }
+  .mc-card.havenot .mc-tag { color: var(--accent-dark); }
+  .mc-title {
+    font-size: 2.01vw;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .mc-card.have .mc-title { color: var(--navy-dark); }
+  .mc-card.havenot .mc-title { color: var(--accent-dark); }
+  .mc-body {
+    font-size: 1.17vw;
+    line-height: 1.55;
+    color: var(--text);
+    margin-top: 0.2vw;
+  }
+  .mc-body strong { color: var(--navy-dark); }
+  .mc-card.havenot .mc-body strong { color: var(--accent-dark); }
+  .mc-cycle {
+    margin-top: auto;
+    font-size: 1.01vw;
+    font-weight: 700;
+    padding: 0.55vw 0.8vw;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+  }
+  .mc-card.have .mc-cycle {
+    background: var(--navy);
+    color: #fff;
+  }
+  .mc-card.havenot .mc-cycle {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .mc-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vw;
+    position: relative;
+  }
+  .mc-divider-line {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(180deg, transparent 0%, var(--text-light) 50%, transparent 100%);
+  }
+  .mc-vs {
+    width: 3.2vw; height: 3.2vw;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.17vw;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 14px rgba(200,48,44,0.35);
+    flex-shrink: 0;
+  }
+
+  .mission-bridge {
+    text-align: center;
+    margin-top: -0.4vw;
+  }
+  .bridge-label {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.55vw 1.6vw;
+    border-radius: 999px;
+    font-size: 1.22vw;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    box-shadow: 0 4px 14px rgba(200,48,44,0.3);
+  }
+  .bridge-label .arrow { margin: 0 0.3vw; }
+
+  .mission-conclusion {
+    background: linear-gradient(120deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.0vw 1.6vw;
+    border-left: 6px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+  }
+  .mc-headline {
+    font-size: 1.78vw;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  .mc-headline .accent { color: #fff; }
+  .mc-supplement {
+    font-size: 1.11vw;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.55;
+  }
+  .mc-supplement strong { color: var(--accent); }
+
+  /* ===== Common content blocks for slides 3+ ===== */
+  .content-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 2.4vw 1.4vw 2.4vw;
+    overflow: hidden;
+    gap: 0.85vw;
+  }
+  .content-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--navy-light);
+    padding-bottom: 0.4vw;
+    gap: 1.2vw;
+  }
+  .content-title {
+    font-size: 2.06vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    line-height: 1.2;
+  }
+  .content-title .accent { color: var(--accent); }
+  .content-sub {
+    font-size: 1.05vw;
+    color: var(--text-muted);
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Data table */
+  .dt {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94vw;
+  }
+  .dt th, .dt td {
+    padding: 0.4vw 0.65vw;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .dt th:first-child, .dt td:first-child { text-align: left; }
+  .dt th {
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.89vw;
+    letter-spacing: 0.04em;
+  }
+  .dt tr.hi { background: var(--accent-light); }
+  .dt tr.hi td { font-weight: 700; color: var(--navy-dark); }
+  .dt td .pos { color: var(--accent); font-weight: 700; }
+  .dt td.num { font-variant-numeric: tabular-nums; }
+
+  /* Key message bar (red) */
+  .key-msg {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.8vw 1.2vw;
+    font-size: 1.17vw;
+    font-weight: 700;
+    line-height: 1.4;
+    box-shadow: 0 4px 14px rgba(200,48,44,0.25);
+    margin-top: auto;
+  }
+  .key-msg .label {
+    display: inline-block;
+    font-size: 0.85vw;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    background: rgba(255,255,255,0.18);
+    padding: 0.15vw 0.6vw;
+    border-radius: 4px;
+    margin-right: 0.8vw;
+    vertical-align: middle;
+  }
+
+  /* Generic two-col / three-col / four-col */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9vw; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7vw; }
+  .cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6vw; }
+  .cols-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.55vw; }
+
+  /* Generic box */
+  .box {
+    background: #FAFAFA;
+    border-left: 4px solid var(--navy);
+    border-radius: 8px;
+    padding: 0.65vw 0.9vw;
+    font-size: 0.94vw;
+    line-height: 1.5;
+  }
+  .box.warn { border-left-color: var(--accent); background: var(--accent-light); }
+  .box.dark { border-left-color: var(--accent); background: var(--navy-dark); color: #fff; }
+  .box.dark .h { color: var(--accent); }
+  .box .h { font-weight: 800; color: var(--navy-dark); margin-bottom: 0.2vw; font-size: 1.05vw; }
+  .box.warn .h { color: var(--accent-dark); }
+
+  /* Player card */
+  .player-card {
+    background: #fff;
+    border: 2px solid var(--navy-light);
+    border-radius: 10px;
+    padding: 0.85vw 1vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+  }
+  .player-card.hi { border-color: var(--accent); background: #FFFBFB; }
+  .player-card .ptag {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    font-size: 0.79vw;
+    padding: 0.18vw 0.55vw;
+    border-radius: 4px;
+    font-weight: 700;
+    align-self: flex-start;
+    letter-spacing: 0.06em;
+  }
+  .player-card.hi .ptag { background: var(--accent); }
+  .player-card .pname { font-size: 1.22vw; font-weight: 800; color: var(--navy-dark); margin-top: 0.1vw; }
+  .player-card .prow { font-size: 0.86vw; line-height: 1.45; color: var(--text); }
+  .player-card .prow .lab { color: var(--text-muted); font-weight: 700; margin-right: 0.3vw; }
+  .player-card .strat {
+    margin-top: auto;
+    background: var(--navy-light);
+    border-radius: 5px;
+    padding: 0.35vw 0.55vw;
+    font-size: 0.89vw;
+    color: var(--navy-dark);
+    font-weight: 700;
+  }
+  .player-card.hi .strat { background: var(--accent-light); color: var(--accent-dark); }
+
+  /* Bank category card */
+  .bank-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.55vw;
+  }
+  .bank-card {
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 0.6vw 0.75vw;
+    font-size: 0.83vw;
+    line-height: 1.4;
+    border-top: 3px solid var(--navy);
+  }
+  .bank-card.warn { border-top-color: var(--accent); background: var(--accent-light); }
+  .bank-num {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    width: 1.5vw; height: 1.5vw;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.5vw;
+    font-weight: 800;
+    font-size: 0.89vw;
+    margin-right: 0.35vw;
+    vertical-align: middle;
+  }
+  .bank-card .h { font-weight: 800; color: var(--navy-dark); font-size: 1.01vw; margin-bottom: 0.25vw; display: flex; align-items: center; }
+  .bank-card .desc { color: var(--text); }
+  .bank-card .desc strong { color: var(--accent-dark); }
+
+  /* Flow steps */
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5vw;
+  }
+  .flow-step {
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 0.55vw 0.7vw;
+    border-left: 4px solid var(--navy);
+    position: relative;
+  }
+  .flow-step .step-num {
+    font-size: 0.79vw;
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+  .flow-step .step-name { font-size: 1.01vw; font-weight: 800; color: var(--navy-dark); margin-top: 0.1vw; line-height: 1.2; }
+  .flow-step .step-desc { font-size: 0.75vw; color: var(--text-muted); margin-top: 0.2vw; line-height: 1.35; }
+
+  /* Case comparison */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 0.9vw;
+  }
+  .case-card {
+    border-radius: 10px;
+    padding: 0.85vw 1vw;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+  }
+  .case-card.a { background: #FAFAFA; border-color: var(--text-light); }
+  .case-card.b { background: var(--accent-light); border-color: var(--accent); }
+  .case-card .case-tag {
+    font-size: 0.85vw;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .case-card.a .case-tag { color: var(--text-muted); }
+  .case-card.b .case-tag { color: var(--accent-dark); }
+  .case-card .case-h { font-size: 1.11vw; font-weight: 800; color: var(--navy-dark); }
+  .case-card .dt { font-size: 0.83vw; }
+  .case-card .dt th, .case-card .dt td { padding: 0.22vw 0.4vw; }
+
+  /* Failure list */
+  .fail-list {
+    background: #FFF8F8;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.6vw 0.9vw;
+    font-size: 0.86vw;
+    line-height: 1.5;
+  }
+  .fail-list .h { font-weight: 800; color: var(--accent-dark); font-size: 1.01vw; margin-bottom: 0.25vw; }
+  .fail-list ul { margin: 0; padding: 0; list-style: none; }
+  .fail-list li { padding-left: 1.2vw; position: relative; }
+  .fail-list li::before { content: '×'; position: absolute; left: 0; color: var(--accent); font-weight: 800; font-size: 1.01vw; }
+
+  /* Step list (work slides) */
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45vw;
+  }
+  .step-row {
+    display: grid;
+    grid-template-columns: 2.4vw 1fr;
+    gap: 0.6vw;
+    align-items: flex-start;
+    background: #FAFAFA;
+    border-radius: 6px;
+    padding: 0.55vw 0.8vw;
+    border-left: 3px solid var(--navy);
+  }
+  .step-row .step-n {
+    background: var(--accent);
+    color: #fff;
+    width: 2vw; height: 2vw;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 1.05vw;
+    flex-shrink: 0;
+  }
+  .step-row .step-c { font-size: 0.98vw; line-height: 1.45; }
+  .step-row .step-c strong { color: var(--navy-dark); }
+
+  /* (旧: Global font-size scale-up ブロックは削除。base 定義に ×1.18 が既に適用済のため) */
+
+  /* ================================================================
+   * Visual components for redesigned slides 3-10
+   * ============================================================= */
+
+  /* === Scatter chart (slide 3) === */
+  .scatter {
+    position: relative;
+    flex: 1;
+    background: linear-gradient(135deg, #FAFAFA 0%, #ECECEC 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 22vw;
+  }
+  .sc-axis-y, .sc-axis-x { position: absolute; background: var(--navy-dark); }
+  .sc-axis-y { left: 4.5%; top: 6%; bottom: 11%; width: 3px; }
+  .sc-axis-x { bottom: 11%; left: 4.5%; right: 4%; height: 3px; }
+  .sc-axis-y::before { content:''; position:absolute; top:-8px; left:-7px; border:8px solid transparent; border-bottom-color: var(--navy-dark); }
+  .sc-axis-x::after { content:''; position:absolute; right:-8px; top:-7px; border:8px solid transparent; border-left-color: var(--navy-dark); }
+  .sc-label-y { position: absolute; top: 0.8vw; left: 5.5vw; font-size: 1.11vw; font-weight: 800; color: var(--navy); }
+  .sc-label-x { position: absolute; bottom: 0.8vw; right: 1vw; font-size: 1.11vw; font-weight: 800; color: var(--navy); }
+  .sc-quadrant {
+    position: absolute;
+    font-size: 0.89vw;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .sc-pt {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35vw;
+  }
+  .sc-dot {
+    width: 1.6vw; height: 1.6vw;
+    border-radius: 50%;
+    background: var(--text-muted);
+    box-shadow: 0 0 0 6px rgba(102,102,102,0.18);
+  }
+  .sc-pt.hero .sc-dot {
+    width: 3.2vw; height: 3.2vw;
+    background: var(--accent);
+    box-shadow: 0 0 0 10px rgba(200,48,44,0.22);
+    animation: heropulse 2.6s ease-in-out infinite;
+  }
+  @keyframes heropulse {
+    0%,100% { box-shadow: 0 0 0 10px rgba(200,48,44,0.22); }
+    50% { box-shadow: 0 0 0 18px rgba(200,48,44,0.08); }
+  }
+  .sc-lbl {
+    background: #fff;
+    padding: 0.3vw 0.65vw;
+    border-radius: 6px;
+    font-size: 1.01vw;
+    font-weight: 700;
+    color: var(--navy-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    white-space: nowrap;
+  }
+  .sc-pt.hero .sc-lbl {
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.27vw;
+    font-weight: 800;
+    box-shadow: 0 4px 14px rgba(200,48,44,0.35);
+  }
+
+  /* === Bar comparison (slide 4) === */
+  .barcmp { display: grid; grid-template-columns: 1fr 1.15fr; gap: 1.2vw; flex: 1; }
+  .barcmp-card {
+    background: #FAFAFA;
+    border-radius: 12px;
+    padding: 1vw 1.2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7vw;
+    border: 2px solid #ddd;
+  }
+  .barcmp-card.hot { background: var(--accent-light); border-color: var(--accent); }
+  .bcmp-tag { font-size: 0.89vw; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); }
+  .barcmp-card.hot .bcmp-tag { color: var(--accent-dark); }
+  .bcmp-h { font-size: 1.22vw; font-weight: 800; color: var(--navy-dark); line-height: 1.25; }
+  .bcmp-card.hot .bcmp-h { color: var(--accent-dark); }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 3.5vw 1fr 4.5vw;
+    align-items: center;
+    gap: 0.4vw;
+    font-size: 0.86vw;
+  }
+  .bar-yr { font-weight: 800; color: var(--navy-dark); text-align: right; }
+  .bar-area {
+    position: relative;
+    height: 1.6vw;
+    background: #fff;
+    border-radius: 4px;
+    overflow: visible;
+    display: flex;
+    box-shadow: inset 0 0 0 1px #e5e5e5;
+  }
+  .bar-debt {
+    background: repeating-linear-gradient(135deg, #b0b0b0 0 8px, #999 8px 16px);
+    display: flex;
+    align-items: center;
+    padding-left: 0.4vw;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.76vw;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .bar-asset {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 100%);
+    display: flex;
+    align-items: center;
+    padding-left: 0.4vw;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.76vw;
+  }
+  .bar-fixed {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    height: 100%;
+    flex-shrink: 0;
+  }
+  .bar-fixed-label {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5vw;
+    font-size: 0.85vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    white-space: nowrap;
+  }
+  .bar-net { font-weight: 800; color: var(--accent-dark); text-align: left; font-size: 0.89vw; }
+  .bar-legend {
+    display: flex;
+    gap: 1vw;
+    font-size: 0.79vw;
+    color: var(--text-muted);
+    margin-top: 0.2vw;
+  }
+  .bar-legend .swatch { display: inline-block; width: 0.8vw; height: 0.8vw; border-radius: 2px; margin-right: 0.3vw; vertical-align: middle; }
+  .bar-legend .sw-debt { background: #999; }
+  .bar-legend .sw-asset { background: var(--accent); }
+  .bar-legend .sw-fixed { background: var(--navy); }
+
+  /* ===== Apple-to-Apple 比較表 (P10) ===== */
+  .apple-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.6vw;
+  }
+  .apple-table th {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.45vw 0.4vw;
+    font-size: 0.95vw;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .apple-table th:first-child {
+    border-top-left-radius: 6px;
+  }
+  .apple-table th:last-child {
+    border-top-right-radius: 6px;
+  }
+  .apple-table td {
+    padding: 0.55vw 0.4vw;
+    text-align: center;
+    font-size: 1.15vw;
+    font-weight: 800;
+    border-bottom: 1px solid #eee;
+    font-variant-numeric: tabular-nums;
+  }
+  .apple-table tr:last-child td {
+    border-bottom: none;
+  }
+  .apple-table .col-yr {
+    font-size: 0.95vw;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .apple-table .col-cash {
+    color: var(--navy-dark);
+  }
+  .apple-table .col-debt {
+    color: var(--text-light);
+    font-weight: 700;
+  }
+  .apple-table .col-asset {
+    color: var(--navy-dark);
+  }
+  /* 借入カード側の強調 */
+  .apple-table.hot .col-debt {
+    color: #6b6b6b;
+    font-weight: 800;
+    background: #f5f5f5;
+  }
+  .apple-table.hot .col-asset {
+    color: var(--accent-dark);
+    font-weight: 900;
+    background: var(--accent-light);
+  }
+  .apple-foot {
+    margin-top: 0.5vw;
+    text-align: right;
+    font-size: 0.95vw;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .apple-foot.accent {
+    color: var(--accent-dark);
+    font-weight: 900;
+  }
+
+  /* ===== Cash-flow bar (P10 視覚版) ===== */
+  .cf-legend {
+    display: flex;
+    align-items: center;
+    gap: 0.9vw;
+    font-size: 0.8vw;
+    color: var(--text-muted);
+    margin: 0.4vw 0 0.5vw 0;
+    font-weight: 700;
+  }
+  .cf-legend .sw {
+    display: inline-block;
+    width: 0.8vw;
+    height: 0.8vw;
+    border-radius: 2px;
+    margin-right: 0.25vw;
+    vertical-align: middle;
+  }
+  .cf-legend .sw-debt {
+    background: repeating-linear-gradient(135deg, #b0b0b0 0 4px, #999 4px 8px);
+  }
+  .cf-legend .sw-asset {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 100%);
+  }
+  .cf-legend .sw-cash {
+    background: linear-gradient(90deg, #1f5fbf 0%, #14418a 100%);
+  }
+  .cf-legend .sw-cash-asset {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-dark) 100%);
+  }
+  .cf-cash-key {
+    margin-left: auto;
+    color: var(--navy);
+  }
+
+  .cf-row {
+    display: grid;
+    grid-template-columns: 2.6vw 1fr auto;
+    align-items: center;
+    gap: 0.5vw;
+    margin-bottom: 0.5vw;
+  }
+  .cf-yr {
+    font-size: 0.95vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    text-align: right;
+  }
+  .cf-bar {
+    display: flex;
+    height: 1.9vw;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px #e5e5e5;
+  }
+  .cf-debt {
+    background: repeating-linear-gradient(135deg, #b0b0b0 0 8px, #999 8px 16px);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.95vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cf-asset {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.95vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .cf-asset.cash {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-dark) 100%);
+  }
+  .cf-asset-label.cash {
+    color: var(--navy-dark);
+  }
+  .cf-cash-seg {
+    background: linear-gradient(90deg, #1f5fbf 0%, #14418a 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.78vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4vw;
+    min-width: 1.8vw;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-left: 2px solid #fff;
+  }
+  .cf-tail {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6vw;
+    white-space: nowrap;
+  }
+  .cf-asset-label {
+    font-size: 0.95vw;
+    font-weight: 900;
+    color: var(--accent-dark);
+  }
+  .barcmp-card:not(.hot) .cf-asset-label {
+    color: var(--navy-dark);
+  }
+  .cf-cash {
+    font-size: 0.82vw;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .cf-cash.hot {
+    color: var(--navy);
+  }
+  .cf-summary {
+    margin-top: 0.6vw;
+    padding-top: 0.5vw;
+    border-top: 1px dashed #ccc;
+    font-size: 0.88vw;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .cf-summary.hot {
+    color: var(--accent-dark);
+    font-weight: 800;
+  }
+  .cf-summary strong {
+    color: inherit;
+    font-weight: 900;
+  }
+
+  /* === Star rating cards (slide 5) === */
+  .ratings {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7vw;
+    flex: 1;
+  }
+  .rcard {
+    background: #fff;
+    border: 2px solid var(--navy-light);
+    border-radius: 10px;
+    padding: 0.7vw 0.85vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+  }
+  .rcard.hero { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 4px 14px rgba(200,48,44,0.15); }
+  .rcard.bad { border-color: var(--text-light); background: #F7F7F7; opacity: 0.92; }
+  .rc-head { display: flex; align-items: center; justify-content: space-between; }
+  .rc-icon { font-size: 1.69vw; line-height: 1; }
+  .rc-tag {
+    font-size: 0.75vw;
+    padding: 0.15vw 0.5vw;
+    border-radius: 4px;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  .rcard.hero .rc-tag { background: var(--accent); }
+  .rcard.bad .rc-tag { background: var(--text-light); }
+  .rc-name {
+    font-size: 1.22vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    line-height: 1.15;
+  }
+  .rcard.hero .rc-name { color: var(--accent-dark); }
+  .rc-rating {
+    display: grid;
+    grid-template-columns: 4.5vw 1fr;
+    gap: 0.3vw 0.5vw;
+    font-size: 0.83vw;
+    align-items: center;
+  }
+  .rc-rating .rl { color: var(--text-muted); font-weight: 700; }
+  .rc-stars {
+    color: var(--accent);
+    font-size: 1.01vw;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+  .rc-stars .off { color: #ccc; }
+  .rc-comment {
+    font-size: 0.85vw;
+    color: var(--text);
+    line-height: 1.4;
+    padding-top: 0.3vw;
+    border-top: 1px dashed var(--border);
+    margin-top: 0.2vw;
+  }
+  .rcard.hero .rc-comment { color: var(--accent-dark); font-weight: 700; }
+
+  /* === Income stairs (slide 6) === */
+  .stairs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.55vw;
+    flex: 1;
+    align-items: end;
+    padding-top: 1vw;
+  }
+  .stair {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy-dark) 100%);
+    color: #fff;
+    border-radius: 10px 10px 6px 6px;
+    padding: 0.8vw 0.7vw;
+    border-top: 4px solid var(--accent);
+    gap: 0.3vw;
+  }
+  .stair.h1 { height: 60%; }
+  .stair.h2 { height: 75%; }
+  .stair.h3 { height: 90%; }
+  .stair.h4 { height: 100%; background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%); border-top-color: #fff3; }
+  .stair-rank { font-size: 0.89vw; color: var(--accent); font-weight: 800; letter-spacing: 0.1em; }
+  .stair.h4 .stair-rank { color: #fff3; }
+  .stair-name { font-size: 1.11vw; font-weight: 800; line-height: 1.2; }
+  .stair-bank { font-size: 0.83vw; color: rgba(255,255,255,0.8); line-height: 1.45; }
+  .stair-bank .lbl { color: var(--accent); font-weight: 800; }
+  .stair.h4 .stair-bank .lbl { color: #fff3; }
+  .stair-strat {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 0.85vw;
+    padding: 0.35vw 0.5vw;
+    border-radius: 4px;
+    font-weight: 800;
+    margin-top: auto;
+    border-left: 3px solid var(--accent);
+  }
+  .stair.h4 .stair-strat { background: rgba(0,0,0,0.25); border-left-color: #fff; }
+
+  /* === Pyramid bank (slide 8) === */
+  .pyramid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35vw;
+    padding: 0.5vw 0;
+  }
+  .pyr-row { display: flex; align-items: center; justify-content: center; gap: 0.6vw; width: 100%; }
+  .pyr-bar {
+    color: #fff;
+    padding: 0.55vw 1vw;
+    border-radius: 6px;
+    font-size: 1.01vw;
+    font-weight: 800;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45vw;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .pyr-bar .pyr-num {
+    background: rgba(255,255,255,0.25);
+    width: 1.5vw; height: 1.5vw;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.89vw;
+    font-weight: 800;
+  }
+  .pyr-bar.bad { background: var(--accent); }
+  .pyr-bar.warn { background: #C56240; }
+  .pyr-bar.cold { background: var(--navy); }
+  .pyr-bar.cool { background: var(--navy-mid); }
+  .pyr-bar.warm { background: #1a3d6b; }
+  .pyr-w-1 { width: 25%; }
+  .pyr-w-2 { width: 38%; }
+  .pyr-w-3 { width: 50%; }
+  .pyr-w-4 { width: 62%; }
+  .pyr-w-5 { width: 74%; }
+  .pyr-w-6 { width: 86%; }
+  .pyr-w-7 { width: 96%; }
+  .pyr-note {
+    font-size: 0.79vw;
+    color: var(--text-muted);
+    text-align: left;
+    flex-shrink: 1;
+    line-height: 1.3;
+  }
+  .pyr-side {
+    background: var(--navy-dark);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.7vw 1vw;
+    border-left: 4px solid var(--accent);
+    font-size: 0.89vw;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+  }
+  .pyr-side .h { color: var(--accent); font-weight: 800; font-size: 1.05vw; letter-spacing: 0.1em; }
+  .pyr-side .order {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+    font-size: 0.89vw;
+  }
+  .pyr-side .order-step {
+    display: flex;
+    align-items: center;
+    gap: 0.4vw;
+  }
+  .pyr-side .order-num {
+    background: var(--accent);
+    color: #fff;
+    width: 1.4vw; height: 1.4vw;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85vw;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .pyr-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 0.9vw; flex: 1; align-items: stretch; }
+
+  /* === Big steps (slide 9) === */
+  .bigsteps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7vw;
+  }
+  .bigstep {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.85vw 0.85vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+    border-top: 4px solid var(--accent);
+  }
+  .bigstep .bs-num { font-size: 0.79vw; color: var(--accent); font-weight: 800; letter-spacing: 0.15em; }
+  .bigstep .bs-icon { font-size: 2.01vw; line-height: 1; }
+  .bigstep .bs-name { font-size: 1.11vw; font-weight: 800; line-height: 1.2; }
+  .bigstep .bs-desc { font-size: 0.83vw; color: rgba(255,255,255,0.85); line-height: 1.45; margin-top: auto; }
+  .bigstep:not(:last-child)::after {
+    content: '▶';
+    position: absolute;
+    right: -0.65vw;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 1.11vw;
+    font-weight: 800;
+    z-index: 2;
+    text-shadow: 0 0 4px #fff;
+  }
+
+  /* === Wide flow (slide 10) === */
+  .wflow {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.45vw;
+  }
+  .wfstep {
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 0.55vw 0.45vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2vw;
+    position: relative;
+    border-top: 3px solid var(--navy);
+  }
+  .wfstep.goal { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; border-top-color: #fff3; }
+  .wfstep .wf-num { font-size: 0.75vw; font-weight: 800; color: var(--accent); letter-spacing: 0.1em; }
+  .wfstep.goal .wf-num { color: #fff; }
+  .wfstep .wf-icon { font-size: 1.59vw; line-height: 1; }
+  .wfstep .wf-name { font-size: 0.83vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .wfstep.goal .wf-name { color: #fff; }
+  .wfstep:not(:last-child)::after {
+    content: '›';
+    position: absolute;
+    right: -0.55vw;
+    top: 35%;
+    color: var(--accent);
+    font-size: 1.69vw;
+    font-weight: 800;
+    z-index: 2;
+    line-height: 1;
+  }
+
+  /* === Hero/giant icon (slide 7) === */
+  .work-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vw; flex: 1; }
+  .work-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1vw 1.2vw;
+    border: 2px solid var(--navy-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+  }
+  .work-card.b { border-color: var(--accent); background: var(--accent-light); }
+  .wh-head { display: flex; align-items: center; gap: 0.7vw; }
+  .wh-icon { font-size: 2.53vw; line-height: 1; }
+  .wh-tag { font-size: 0.85vw; font-weight: 800; color: var(--navy); letter-spacing: 0.15em; }
+  .work-card.b .wh-tag { color: var(--accent-dark); }
+  .wh-title { font-size: 1.38vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .wh-body { font-size: 0.98vw; line-height: 1.55; }
+  .wh-body strong { color: var(--navy-dark); }
+  .wh-body .lab {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    padding: 0.1vw 0.45vw;
+    border-radius: 3px;
+    font-size: 0.75vw;
+    font-weight: 800;
+    margin-right: 0.3vw;
+    vertical-align: middle;
+  }
+  .work-card.b .wh-body .lab { background: var(--accent); }
+  .work-merit {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5vw;
+    margin-top: auto;
+  }
+  .wm-cell {
+    background: var(--navy-dark);
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.5vw 0.6vw;
+    border-left: 3px solid var(--accent);
+    font-size: 0.85vw;
+    line-height: 1.4;
+  }
+  .wm-cell .wmn { color: var(--accent); font-weight: 800; font-size: 0.89vw; display: block; }
+
+  /* === Big workflow steps (slide 9 alternative simple) === */
+  .wf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7vw;
+  }
+  .wf-card {
+    background: linear-gradient(135deg, #fff 0%, #FAFAFA 100%);
+    border: 2px solid var(--navy-light);
+    border-top: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 0.85vw 0.9vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35vw;
+    position: relative;
+  }
+  .wf-card .wfn {
+    background: var(--accent);
+    color: #fff;
+    width: 2vw; height: 2vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05vw;
+    font-weight: 800;
+    position: absolute;
+    top: -1vw;
+    left: 0.7vw;
+  }
+  .wf-card .wf-icon2 { font-size: 1.8vw; line-height: 1; margin-top: 0.4vw; }
+  .wf-card .wf-name2 { font-size: 1.11vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .wf-card .wf-desc2 { font-size: 0.86vw; line-height: 1.4; color: var(--text); }
+
+  /* === Compact info row === */
+  .info-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6vw;
+  }
+  .info-card {
+    background: var(--navy-dark);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.6vw 0.8vw;
+    border-left: 4px solid var(--accent);
+    font-size: 0.86vw;
+    line-height: 1.4;
+  }
+  .info-card .h { color: var(--accent); font-weight: 800; font-size: 0.94vw; margin-bottom: 0.15vw; }
+
+  /* Mini key message (smaller) */
+  .key-msg.mini {
+    font-size: 1.17vw;
+    padding: 0.65vw 1vw;
+  }
+
+  /* Inline failure compact (slide 10) */
+  .fail-compact {
+    background: #FFF8F8;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.5vw 0.8vw;
+    font-size: 0.85vw;
+    line-height: 1.5;
+  }
+  .fail-compact .h { font-weight: 800; color: var(--accent-dark); font-size: 0.98vw; margin-bottom: 0.2vw; }
+  .fail-compact .frow { display: flex; gap: 1.2vw; flex-wrap: wrap; }
+  .fail-compact .frow span { color: var(--text); }
+  .fail-compact .frow span::before { content: '✕ '; color: var(--accent); font-weight: 800; }
+
+  /* Trio cards bottom */
+  .trio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5vw;
+  }
+  .trio-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.55vw 0.8vw;
+    border-left: 4px solid var(--accent);
+    font-size: 0.89vw;
+  }
+  .trio-card .h { color: var(--accent); font-weight: 800; font-size: 1.01vw; }
+
+  /* ================================================================
+   * v3: 高校生レベル "1メッセージ・1図・大文字"
+   * ============================================================= */
+
+  /* 巨大2項比較 */
+  .hero2 {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4vw;
+    align-items: stretch;
+  }
+  .hero-card {
+    border-radius: 16px;
+    padding: 1.6vw 1.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6vw;
+    text-align: center;
+    border: 3px solid;
+    position: relative;
+  }
+  .hero-card.dim { background: #F4F4F4; border-color: #BBB; color: var(--text-muted); }
+  .hero-card.win { background: linear-gradient(135deg, var(--accent-light) 0%, #fff 100%); border-color: var(--accent); }
+  .hero-tag {
+    font-size: 1.05vw;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 0.3vw 1.1vw;
+    border-radius: 999px;
+  }
+  .hero-card.dim .hero-tag { background: #DDD; color: #555; }
+  .hero-card.win .hero-tag { background: var(--accent); color: #fff; }
+  .hero-icon-xl { font-size: 4.76vw; line-height: 1; }
+  .hero-headline {
+    font-size: 1.8vw;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--navy-dark);
+  }
+  .hero-card.dim .hero-headline { color: var(--text-muted); }
+  .hero-num {
+    font-size: 3.8vw;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--navy-dark);
+  }
+  .hero-card.win .hero-num { color: var(--accent); }
+  .hero-num .small { font-size: 1.38vw; color: var(--text-muted); font-weight: 700; display: block; margin-top: 0.3vw; }
+  .hero-msg {
+    font-size: 1.05vw;
+    line-height: 1.5;
+    color: var(--text);
+    font-weight: 600;
+    background: rgba(255,255,255,0.7);
+    padding: 0.5vw 0.8vw;
+    border-radius: 6px;
+    margin-top: auto;
+  }
+  .hero-card.dim .hero-msg { background: rgba(0,0,0,0.04); }
+  .hero-card.win .hero-msg { background: rgba(255,255,255,0.85); }
+  .vs-circle {
+    position: absolute;
+    top: 50%;
+    left: -1.5vw;
+    transform: translateY(-50%);
+    background: var(--accent);
+    color: #fff;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.05vw;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    z-index: 5;
+  }
+
+  /* 3グループ分類 */
+  .group3 {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1vw;
+  }
+  .gcol {
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    padding: 1vw 1vw;
+    border: 3px solid;
+    gap: 0.55vw;
+  }
+  .gcol.entry { background: #EDF4FC; border-color: #4A90E2; }
+  .gcol.main { background: var(--accent-light); border-color: var(--accent); }
+  .gcol.trap { background: #F5F5F5; border-color: #999; }
+  .gcol-tag {
+    font-size: 1.11vw;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-align: center;
+    padding: 0.4vw 0.5vw;
+    border-radius: 999px;
+    color: #fff;
+  }
+  .gcol.entry .gcol-tag { background: #4A90E2; }
+  .gcol.main .gcol-tag { background: var(--accent); }
+  .gcol.trap .gcol-tag { background: #777; }
+  .gcol-headline {
+    font-size: 1.47vw;
+    font-weight: 800;
+    text-align: center;
+    color: var(--navy-dark);
+    line-height: 1.2;
+  }
+  .gcol.trap .gcol-headline { color: var(--text-muted); }
+  .gcol-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.6vw 0.75vw;
+    display: flex;
+    align-items: center;
+    gap: 0.55vw;
+  }
+  .gcol-item .gicon { font-size: 1.8vw; flex-shrink: 0; line-height: 1; }
+  .gcol-item .gtext { flex: 1; }
+  .gcol-item .gname { font-size: 1.17vw; font-weight: 800; color: var(--navy-dark); line-height: 1.15; }
+  .gcol-item .gnote { font-size: 0.83vw; color: var(--text-muted); font-weight: 600; margin-top: 0.1vw; }
+  .gcol-msg {
+    background: rgba(0,0,0,0.05);
+    border-radius: 6px;
+    padding: 0.5vw 0.7vw;
+    font-size: 0.98vw;
+    line-height: 1.45;
+    margin-top: auto;
+    text-align: center;
+    font-weight: 700;
+  }
+  .gcol.entry .gcol-msg { background: rgba(74,144,226,0.18); color: #1e5dab; }
+  .gcol.main .gcol-msg { background: rgba(200,48,44,0.2); color: var(--accent-dark); }
+  .gcol.trap .gcol-msg { background: rgba(0,0,0,0.08); color: #555; }
+
+  /* 大アイコン縦ステップ */
+  .icon-step-row {
+    flex: 1;
+    display: grid;
+    gap: 1.3vw;
+    align-items: stretch;
+  }
+  .icon-step-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .icon-step-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .icon-step-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .istep {
+    background: #fff;
+    border: 3px solid var(--navy-light);
+    border-top: 6px solid var(--accent);
+    border-radius: 12px;
+    padding: 1.5vw 1vw 1vw 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5vw;
+    position: relative;
+  }
+  .istep-num {
+    background: var(--accent);
+    color: #fff;
+    width: 2.6vw; height: 2.6vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.47vw;
+    font-weight: 900;
+    position: absolute;
+    top: -1.3vw;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .istep-icon { font-size: 3.59vw; line-height: 1; margin-top: 0.3vw; }
+  .istep-name { font-size: 1.53vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .istep-desc { font-size: 1.01vw; line-height: 1.5; color: var(--text); margin-top: auto; }
+  .istep-desc .lab { font-weight: 800; color: var(--accent-dark); }
+  .istep:not(:last-child)::after {
+    content: '▶';
+    position: absolute;
+    right: -1.05vw;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 1.59vw;
+    font-weight: 900;
+    z-index: 5;
+    text-shadow: 0 0 4px #fff, 0 0 8px #fff;
+  }
+
+  /* 銀行4タイプ階層 */
+  .tier4 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7vw;
+    justify-content: center;
+  }
+  .tier {
+    display: grid;
+    grid-template-columns: 5vw 1fr 9vw;
+    align-items: center;
+    gap: 1.2vw;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1vw 1.4vw;
+    border-left: 8px solid var(--navy);
+  }
+  .tier.easy { border-left-color: #4A90E2; background: #F0F7FE; }
+  .tier.normal { border-left-color: var(--navy); background: var(--navy-light); }
+  .tier.hard { border-left-color: #C56240; background: #FFF3EE; }
+  .tier.danger { border-left-color: var(--accent); background: var(--accent-light); }
+  .tier-num {
+    font-size: 2.53vw;
+    font-weight: 900;
+    text-align: center;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .tier.danger .tier-num { color: var(--accent); }
+  .tier-info { display: flex; flex-direction: column; gap: 0.15vw; }
+  .tier-title {
+    font-size: 1.53vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    line-height: 1.2;
+  }
+  .tier-desc {
+    font-size: 1.01vw;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .tier-status {
+    font-size: 1.27vw;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0.4vw 0.5vw;
+    border-radius: 8px;
+    color: #fff;
+  }
+  .tier.easy .tier-status { background: #4A90E2; }
+  .tier.normal .tier-status { background: var(--navy); }
+  .tier.hard .tier-status { background: #C56240; }
+  .tier.danger .tier-status { background: var(--accent); }
+
+  /* デカいまとめ吹き出し */
+  .takeaway {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.2vw 1.6vw;
+    text-align: center;
+    font-size: 1.64vw;
+    font-weight: 800;
+    border-left: 6px solid var(--accent);
+    line-height: 1.4;
+  }
+  .takeaway .accent { color: #fff; font-size: 1.95vw; }
+  .takeaway .small { font-size: 1.05vw; color: rgba(255,255,255,0.8); display: block; margin-top: 0.3vw; font-weight: 600; }
+
+  /* 用語注釈 */
+  .term-note {
+    font-size: 0.85vw;
+    color: var(--text-muted);
+    background: #FAFAFA;
+    padding: 0.4vw 0.8vw;
+    border-radius: 6px;
+    border-left: 3px solid var(--text-light);
+    line-height: 1.5;
+  }
+  .term-note strong { color: var(--navy-dark); }
+
+  /* シンプル流れ図 (家賃→ローン) */
+  .moneyflow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6vw;
+    padding: 1vw 0;
+  }
+  .mf-node {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: 12px;
+    padding: 1vw 0.8vw;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3vw;
+    min-height: 12vw;
+    justify-content: center;
+  }
+  .mf-node.payer { background: #EDF4FC; border-color: #4A90E2; }
+  .mf-node.you { background: var(--accent-light); border-color: var(--accent); }
+  .mf-node.bank { background: var(--navy-light); border-color: var(--navy); }
+  .mf-node.goal { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; border-color: var(--accent-dark); }
+  .mf-icon { font-size: 3.17vw; line-height: 1; }
+  .mf-label { font-size: 1.22vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .mf-node.goal .mf-label { color: #fff; font-size: 1.38vw; }
+  .mf-sub { font-size: 0.89vw; color: var(--text-muted); font-weight: 600; }
+  .mf-node.goal .mf-sub { color: rgba(255,255,255,0.9); }
+  .mf-arrow {
+    color: var(--accent);
+    font-size: 2.53vw;
+    font-weight: 900;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .mf-arrow .lbl {
+    display: block;
+    font-size: 0.89vw;
+    color: var(--text);
+    font-weight: 700;
+    margin-top: 0.2vw;
+    background: var(--accent-light);
+    padding: 0.2vw 0.5vw;
+    border-radius: 4px;
+  }
+
+  /* ================================================================
+   * v4: 4スライド分割版（導入／本体／講師ノート／用語解説）
+   * ============================================================= */
+
+  /* チャプタータグ (top-bar左端) */
+  .chap-tag {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.3vw 0.75vw;
+    border-radius: 5px;
+    font-size: 1.11vw;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    margin-right: 0.7vw;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  /* スライド種別バッジ (bottom-bar右端) */
+  .stype {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.25vw 0.85vw;
+    border-radius: 4px;
+    font-size: 1.01vw;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+  .stype.note { background: #C56240; }
+  .stype.term { background: var(--navy); }
+
+  /* === 導入スライド === */
+  .intro-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2.2vw 3vw 2vw 3vw;
+    gap: 1.4vw;
+    justify-content: center;
+  }
+  .intro-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5vw;
+    font-size: 4.21vw;
+    line-height: 1;
+  }
+  .intro-headline {
+    font-size: 2.86vw;
+    font-weight: 800;
+    text-align: center;
+    color: var(--navy-dark);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  .intro-headline .accent { color: var(--accent); }
+  .intro-sub {
+    font-size: 1.27vw;
+    text-align: center;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .intro-purpose {
+    background: linear-gradient(135deg, var(--navy-light) 0%, #f5f7fb 100%);
+    border-left: 6px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.2vw 1.8vw;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  .intro-purpose .label {
+    font-size: 1.01vw;
+    color: var(--accent-dark);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.55vw;
+  }
+  .intro-purpose ul { list-style: none; padding: 0; margin: 0; }
+  .intro-purpose li {
+    font-size: 1.27vw;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 0.3vw 0 0.3vw 1.4vw;
+    position: relative;
+  }
+  .intro-purpose li::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 0.89vw;
+    top: 0.65vw;
+  }
+
+  /* === 講師ノートスライド === */
+  .note-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 2.4vw 1.4vw 2.4vw;
+    gap: 0.85vw;
+    overflow: hidden;
+  }
+  .note-section {
+    background: linear-gradient(135deg, #FAFAFA 0%, #ECECEC 100%);
+    border-left: 5px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.9vw 1.3vw;
+  }
+  .note-section .h {
+    font-size: 1.22vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    margin-bottom: 0.4vw;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+  }
+  .note-section .h .ico {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.18vw 0.6vw;
+    border-radius: 4px;
+    font-size: 0.85vw;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .note-section ul { list-style: none; padding: 0; margin: 0; }
+  .note-section li {
+    font-size: 1.01vw;
+    line-height: 1.55;
+    padding: 0.22vw 0 0.22vw 1.2vw;
+    position: relative;
+    color: var(--text);
+  }
+  .note-section li::before {
+    content: '●';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75vw;
+    top: 0.5vw;
+  }
+  .note-qa {
+    background: var(--navy-light);
+    border-left: 5px solid var(--navy);
+    border-radius: 8px;
+    padding: 0.9vw 1.3vw;
+  }
+  .note-qa .h {
+    font-size: 1.22vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    margin-bottom: 0.4vw;
+    display: flex; align-items: center; gap: 0.5vw;
+  }
+  .note-qa .h .ico {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.18vw 0.6vw;
+    border-radius: 4px;
+    font-size: 0.85vw;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .qa-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1.6fr;
+    gap: 0.8vw;
+    font-size: 0.98vw;
+    line-height: 1.55;
+    padding: 0.32vw 0;
+    border-bottom: 1px dashed rgba(20,39,78,0.2);
+  }
+  .qa-row:last-child { border-bottom: none; }
+  .qa-q { color: var(--accent-dark); font-weight: 700; }
+  .qa-q::before { content: 'Q. '; color: var(--accent); font-weight: 800; }
+  .qa-a { color: var(--text); }
+  .qa-a::before { content: '→ '; color: var(--navy); font-weight: 800; }
+
+  /* === 用語解説スライド === */
+  .term-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vw 2.4vw 1.4vw 2.4vw;
+    gap: 0.7vw;
+    overflow: hidden;
+  }
+  .term-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55vw;
+    align-content: start;
+  }
+  .term-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+  .term-card {
+    background: #fff;
+    border: 2px solid var(--navy-light);
+    border-left: 5px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.6vw 0.9vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.18vw;
+  }
+  .term-card .term-name {
+    font-size: 1.13vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+  }
+  .term-card .term-def {
+    font-size: 0.93vw;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* === 利益種類スライド本体 (⑦-2) === */
+  .profit-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9vw;
+  }
+  .profit-card {
+    border-radius: 12px;
+    padding: 0.9vw 1.1vw;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+  }
+  .profit-card.income { background: var(--navy-light); border-color: var(--navy); }
+  .profit-card.capital { background: var(--accent-light); border-color: var(--accent); }
+  .profit-head { display: flex; align-items: center; gap: 0.6vw; }
+  .profit-icon { font-size: 2.33vw; line-height: 1; }
+  .profit-name { font-size: 1.47vw; font-weight: 800; color: var(--navy-dark); }
+  .profit-card.capital .profit-name { color: var(--accent-dark); }
+  .profit-tag { font-size: 0.83vw; color: var(--text-muted); font-weight: 700; letter-spacing: 0.1em; }
+  .profit-desc { font-size: 0.98vw; line-height: 1.5; color: var(--text); }
+  .profit-desc strong { color: var(--navy-dark); }
+  .profit-card.capital .profit-desc strong { color: var(--accent-dark); }
+
+  /* === 利回り3種テーブル (⑦-2) === */
+  .rate-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93vw;
+  }
+  .rate-table th, .rate-table td {
+    padding: 0.45vw 0.7vw;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+  }
+  .rate-table th {
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.89vw;
+    letter-spacing: 0.04em;
+  }
+  .rate-table td.formula { font-family: 'Consolas', 'Menlo', monospace; color: var(--accent-dark); font-weight: 700; }
+
+  /* === ステップ用 (4タイプ別) === */
+  .type-row {
+    display: grid;
+    grid-template-columns: 4vw 1fr 1.4fr;
+    gap: 0.8vw;
+    align-items: center;
+    background: #fff;
+    border: 2px solid var(--navy-light);
+    border-left: 6px solid var(--navy);
+    border-radius: 10px;
+    padding: 0.7vw 1vw;
+    margin-bottom: 0.5vw;
+  }
+  .type-row.hi { border-left-color: var(--accent); background: #FFFBFB; }
+  .type-tag {
+    font-size: 1.22vw;
+    font-weight: 800;
+    text-align: center;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .type-name {
+    font-size: 1.22vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    line-height: 1.25;
+  }
+  .type-strat {
+    font-size: 0.94vw;
+    line-height: 1.5;
+  }
+  .type-strat .lbl { color: var(--accent-dark); font-weight: 800; margin-right: 0.3vw; }
+  .type-strat strong { color: var(--navy-dark); }
+
+  /* === ロードマップ8ステップ縦長 === */
+  .rmap {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.4vw;
+    flex: 1;
+    align-items: stretch;
+  }
+  .rmap-step {
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 0.6vw 0.4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.25vw;
+    position: relative;
+    border-top: 3px solid var(--navy);
+    justify-content: center;
+  }
+  .rmap-step.goal { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; border-top-color: #fff3; }
+  .rmap-step .rn { font-size: 0.83vw; font-weight: 800; color: var(--accent); letter-spacing: 0.1em; }
+  .rmap-step.goal .rn { color: #fff; }
+  .rmap-step .ricon { font-size: 1.69vw; line-height: 1; }
+  .rmap-step .rname { font-size: 0.89vw; font-weight: 800; color: var(--navy-dark); line-height: 1.25; }
+  .rmap-step.goal .rname { color: #fff; }
+  .rmap-step .rdesc { font-size: 0.75vw; color: var(--text-muted); line-height: 1.3; margin-top: 0.1vw; }
+  .rmap-step.goal .rdesc { color: rgba(255,255,255,0.85); }
+  .rmap-step:not(:last-child)::after {
+    content: '›';
+    position: absolute;
+    right: -0.5vw;
+    top: 35%;
+    color: var(--accent);
+    font-size: 1.59vw;
+    font-weight: 800;
+    z-index: 2;
+    line-height: 1;
+  }
+
+  /* === ⑩本体: 2ワーク横並び === */
+  .work2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+    flex: 1;
+  }
+  .work2-card {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 1vw 1.2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+  }
+  .work2-card.sheet { background: var(--navy-light); border-color: var(--navy); }
+  .work2-card.ai { background: var(--accent-light); border-color: var(--accent); }
+  .work2-head { display: flex; align-items: center; gap: 0.6vw; }
+  .work2-icon { font-size: 2.33vw; line-height: 1; }
+  .work2-tag { font-size: 0.89vw; color: var(--text-muted); font-weight: 800; letter-spacing: 0.15em; }
+  .work2-title { font-size: 1.42vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .work2-card.ai .work2-title { color: var(--accent-dark); }
+  .work2-body { font-size: 0.94vw; line-height: 1.55; }
+  .work2-body strong { color: var(--navy-dark); }
+  .work2-body ul { list-style: none; padding: 0; margin: 0.3vw 0; }
+  .work2-body ul li { padding-left: 0.9vw; position: relative; }
+  .work2-body ul li::before { content: '・'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+
+  /* === ⑫本体: ワークタスクカード === */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7vw;
+  }
+  .task-card {
+    background: linear-gradient(135deg, #fff 0%, #FAFAFA 100%);
+    border: 2px solid var(--navy-light);
+    border-top: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 0.85vw 0.85vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35vw;
+  }
+  .task-card .ticon { font-size: 2.33vw; line-height: 1; }
+  .task-card .tname { font-size: 1.17vw; font-weight: 800; color: var(--navy-dark); line-height: 1.2; }
+  .task-card .tnum { font-size: 1.69vw; font-weight: 900; color: var(--accent); line-height: 1; }
+  .task-card .tnum .unit { font-size: 0.89vw; font-weight: 700; color: var(--text-muted); margin-left: 0.15vw; }
+  .task-card .tdesc { font-size: 0.83vw; color: var(--text-muted); line-height: 1.4; margin-top: auto; }
+
+  /* === ⑪-2 横向きフロー (横長カード×アイコンは箱外) === */
+  .rmap-v {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4vw;
+    justify-content: center;
+    padding: 3vw 0.4vw 0.6vw 0.4vw;
+  }
+  .rstep-v {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 4.6vw;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35vw;
+    background: var(--navy-light);
+    border-radius: 8px;
+    padding: 0.45vw 0.5vw;
+    border-top: 4px solid var(--navy);
+    box-sizing: border-box;
+  }
+  .rstep-v.goal {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    border-top-color: #fff3;
+    flex-direction: column;
+    gap: 0.15vw;
+    justify-content: center;
+  }
+  .rstep-v.goal .vname {
+    text-align: center;
+    color: #fff;
+  }
+  .rstep-v .vicon {
+    position: absolute;
+    top: -2.4vw;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.2vw;
+    line-height: 1;
+  }
+  .rstep-v .vn {
+    font-size: 0.85vw;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .rstep-v.goal .vn { color: #fff; }
+  .rstep-v .vname {
+    font-size: 0.85vw;
+    font-weight: 800;
+    color: var(--navy-dark);
+    line-height: 1.2;
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-align: left;
+  }
+  .rstep-v.goal .vname { color: #fff; }
+  .rstep-v .vdesc { display: none; }
+
+  .rarrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4vw;
+    color: var(--accent);
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 0 6px rgba(200,48,44,0.25);
+    flex-shrink: 0;
+  }
+
+  /* === ⑬ 受講契約 1枚もの === */
+  .contract-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.9vw;
+    align-items: stretch;
+  }
+  .contract-card {
+    background: linear-gradient(135deg, var(--navy-light) 0%, #fff 100%);
+    border: 2px solid var(--navy);
+    border-top: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 0.9vw 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35vw;
+    text-align: center;
+  }
+  .contract-card.hot {
+    background: linear-gradient(135deg, var(--accent-light) 0%, #fff 100%);
+    border-color: var(--accent);
+  }
+  .contract-tag {
+    font-size: 0.89vw;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--navy);
+    background: rgba(20,39,78,0.12);
+    padding: 0.22vw 0.8vw;
+    border-radius: 999px;
+  }
+  .contract-card.hot .contract-tag {
+    color: var(--accent-dark);
+    background: rgba(200,48,44,0.18);
+  }
+  .contract-num {
+    font-size: 2.95vw;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--navy-dark);
+    letter-spacing: -0.02em;
+  }
+  .contract-card.hot .contract-num { color: var(--accent); }
+  .contract-num .unit {
+    font-size: 1.17vw;
+    font-weight: 800;
+    margin-left: 0.15vw;
+    letter-spacing: 0;
+  }
+  .contract-num .tax {
+    display: block;
+    font-size: 0.79vw;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 0.15vw;
+  }
+  .contract-sub {
+    font-size: 0.86vw;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* 特典バナー */
+  .benefit-banner {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.2vw 1.6vw;
+    border-left: 6px solid var(--accent);
+    display: grid;
+    grid-template-columns: 4vw 1fr;
+    gap: 1.2vw;
+    align-items: center;
+  }
+  .benefit-icon {
+    font-size: 3.17vw;
+    line-height: 1;
+    text-align: center;
+  }
+  .benefit-text {
+    font-size: 1.17vw;
+    line-height: 1.6;
+  }
+  .benefit-text .blabel {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.89vw;
+    font-weight: 800;
+    padding: 0.18vw 0.7vw;
+    border-radius: 4px;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.35vw;
+  }
+  .benefit-text .accent { color: var(--accent); font-weight: 800; }
+  .benefit-text strong { color: #fff; font-weight: 800; }
+
+  /* ================================================================
+   * v5: 全体文字サイズ底上げ（受講者向け視認性UP）
+   * 約 +15〜25% 拡大。重要な見出し系をさらに大きく
+   * ============================================================= */
+
+  /* === 用語解説カード === */
+  .term-card .term-name { font-size: 1.05vw; }
+  .term-card .term-def { font-size: 0.85vw; line-height: 1.5; }
+  .term-card { padding: 0.5vw 0.8vw; gap: 0.1vw; }
+
+  /* === 補足スライド (講師ノート) === */
+  .note-section .h { font-size: 1.42vw; }
+  .note-section .h .ico { font-size: 1.01vw; padding: 0.22vw 0.7vw; }
+  .note-section li { font-size: 1.19vw; line-height: 1.6; padding: 0.3vw 0 0.3vw 1.4vw; }
+  .note-section li::before { font-size: 0.89vw; top: 0.55vw; }
+  .note-qa .h { font-size: 1.42vw; }
+  .qa-row { font-size: 1.13vw; line-height: 1.6; padding: 0.4vw 0; }
+
+  /* === 導入スライド === */
+  .intro-headline { font-size: 3.17vw; }
+  .intro-sub { font-size: 1.42vw; }
+  .intro-purpose .label { font-size: 1.11vw; }
+  .intro-purpose li { font-size: 1.47vw; line-height: 1.65; }
+
+  /* === content-title-row === */
+  .content-title { font-size: 2.53vw; }
+  .content-sub { font-size: 1.32vw; }
+
+  /* === データテーブル === */
+  .dt { font-size: 1.17vw; }
+  .dt th { font-size: 1.11vw; }
+  .dt th, .dt td { padding: 0.55vw 0.75vw; }
+
+  /* === key-msg === */
+  .key-msg { font-size: 1.42vw; padding: 0.95vw 1.4vw; }
+  .key-msg .label { font-size: 1.05vw; padding: 0.2vw 0.7vw; }
+
+  /* === info-card === */
+  .info-card { font-size: 1.05vw; line-height: 1.5; }
+  .info-card .h { font-size: 1.22vw; }
+
+  /* === trio-card === */
+  .trio-card { font-size: 0.92vw; padding: 0.55vw 0.8vw; }
+  .trio-card .h { font-size: 1.05vw; }
+
+  /* === box (汎用) === */
+  .box { font-size: 1.17vw; padding: 0.8vw 1.05vw; }
+  .box .h { font-size: 1.32vw; }
+
+  /* === player-card === */
+  .player-card .ptag { font-size: 1.01vw; padding: 0.22vw 0.65vw; }
+  .player-card .pname { font-size: 1.47vw; }
+  .player-card .prow { font-size: 1.05vw; line-height: 1.55; }
+  .player-card .strat { font-size: 1.11vw; padding: 0.45vw 0.65vw; }
+
+  /* === bank-card === */
+  .bank-card { font-size: 1.01vw; line-height: 1.5; padding: 0.75vw 0.9vw; }
+  .bank-card .h { font-size: 1.22vw; }
+  .bank-num { width: 1.7vw; height: 1.7vw; line-height: 1.7vw; font-size: 1.01vw; }
+
+  /* === flow-step === */
+  .flow-step .step-num { font-size: 0.94vw; }
+  .flow-step .step-name { font-size: 1.17vw; }
+  .flow-step .step-desc { font-size: 0.89vw; line-height: 1.45; }
+
+  /* === case-card / barcmp === */
+  .case-card .case-tag { font-size: 1.05vw; }
+  .case-card .case-h { font-size: 1.38vw; }
+  .case-card .dt { font-size: 0.98vw; }
+  .case-card .dt th, .case-card .dt td { padding: 0.32vw 0.5vw; }
+  .barcmp-card .bcmp-tag { font-size: 1.05vw; }
+  .barcmp-card .bcmp-h { font-size: 1.38vw; }
+  .bar-row { font-size: 1.01vw; grid-template-columns: 4vw 1fr 5vw; }
+  .bar-yr { font-size: 1.01vw; }
+  .bar-net { font-size: 1.05vw; }
+  .bar-area { height: 1.85vw; }
+  .bar-debt, .bar-asset, .bar-fixed { font-size: 0.89vw; }
+  .bar-legend { font-size: 0.94vw; }
+  .bar-legend .swatch { width: 0.95vw; height: 0.95vw; }
+
+  /* === fail-list / fail-compact === */
+  .fail-list { font-size: 1.05vw; line-height: 1.6; padding: 0.75vw 1vw; }
+  .fail-list .h { font-size: 1.24vw; }
+  .fail-list li { padding-left: 1.4vw; }
+  .fail-compact { font-size: 1.05vw; padding: 0.75vw 1.05vw; }
+  .fail-compact .h { font-size: 1.24vw; }
+  .fail-compact .frow { font-size: 1.05vw; }
+
+  /* === step-row === */
+  .step-row .step-c { font-size: 1.22vw; line-height: 1.55; }
+  .step-row .step-n { width: 2.3vw; height: 2.3vw; font-size: 1.22vw; }
+
+  /* === group3 (3グループ分類) === */
+  .gcol-tag { font-size: 1.24vw; padding: 0.45vw 0.55vw; }
+  .gcol-headline { font-size: 1.75vw; }
+  .gcol-item .gicon { font-size: 2.06vw; }
+  .gcol-item .gname { font-size: 1.38vw; }
+  .gcol-item .gnote { font-size: 0.98vw; }
+  .gcol-msg { font-size: 1.11vw; padding: 0.6vw 0.8vw; }
+
+  /* === icon-step (大ステップ) === */
+  .istep-num { width: 2.8vw; height: 2.8vw; font-size: 1.59vw; top: -1.4vw; }
+  .istep-icon { font-size: 3.8vw; }
+  .istep-name { font-size: 1.69vw; }
+  .istep-desc { font-size: 1.17vw; line-height: 1.6; }
+
+  /* === bigstep === */
+  .bigstep .bs-num { font-size: 0.78vw; }
+  .bigstep .bs-icon { font-size: 1.95vw; }
+  .bigstep .bs-name { font-size: 1.13vw; }
+  .bigstep .bs-desc { font-size: 0.85vw; line-height: 1.45; }
+  .bigstep:not(:last-child)::after { font-size: 1.13vw; right: -0.7vw; }
+
+  /* === tier4 === */
+  .tier-num { font-size: 2.86vw; }
+  .tier-title { font-size: 1.69vw; }
+  .tier-title span { font-size: 1.27vw !important; }
+  .tier-desc { font-size: 1.17vw; line-height: 1.5; }
+  .tier-status { font-size: 1.47vw; padding: 0.5vw 0.6vw; }
+  .tier { padding: 1.05vw 1.4vw; gap: 1.2vw; }
+
+  /* === pyramid === */
+  .pyr-bar { font-size: 1.17vw; padding: 0.65vw 1.1vw; }
+  .pyr-bar .pyr-num { width: 1.7vw; height: 1.7vw; font-size: 1.05vw; }
+  .pyr-note { font-size: 0.98vw; line-height: 1.45; }
+  .pyr-side { font-size: 1.05vw; }
+  .pyr-side .h { font-size: 1.24vw; }
+  .pyr-side .order { font-size: 1.05vw; }
+  .pyr-side .order-num { width: 1.6vw; height: 1.6vw; font-size: 1.01vw; }
+
+  /* === profit-card (⑦本体) === */
+  .profit-icon { font-size: 2.74vw; }
+  .profit-name { font-size: 1.69vw; }
+  .profit-tag { font-size: 1.01vw; }
+  .profit-desc { font-size: 1.17vw; line-height: 1.6; }
+  .rate-table { font-size: 1.11vw; }
+  .rate-table th { font-size: 1.05vw; }
+  .rate-table th, .rate-table td { padding: 0.55vw 0.85vw; }
+
+  /* === type-row (⑨本体) === */
+  .type-tag { font-size: 1.42vw; }
+  .type-name { font-size: 1.42vw; }
+  .type-strat { font-size: 1.11vw; line-height: 1.6; }
+
+  /* === rmap-step (⑪) - 大矢印フロー側は別途 === */
+  .rmap-step .rn { font-size: 0.98vw; }
+  .rmap-step .ricon { font-size: 1.95vw; }
+  .rmap-step .rname { font-size: 1.05vw; }
+  .rmap-step .rdesc { font-size: 0.89vw; line-height: 1.45; }
+  .rstep-v .vn { font-size: 0.65vw; }
+  .rstep-v .vicon { font-size: 1.7vw; }
+  .rstep-v .vname { font-size: 0.85vw; }
+  .rarrow { font-size: 1.4vw; }
+
+  /* === work2-card (⑩本体) === */
+  .work2-icon { font-size: 2.65vw; }
+  .work2-tag { font-size: 1.05vw; }
+  .work2-title { font-size: 1.64vw; }
+  .work2-body { font-size: 1.11vw; line-height: 1.65; }
+
+  /* === task-card (⑫本体) === */
+  .task-card .ticon { font-size: 2.74vw; }
+  .task-card .tname { font-size: 1.38vw; }
+  .task-card .tnum { font-size: 1.95vw; }
+  .task-card .tnum .unit { font-size: 1.05vw; }
+  .task-card .tdesc { font-size: 1.01vw; line-height: 1.5; }
+
+  /* === wf-card / wfstep === */
+  .wfstep .wf-num { font-size: 0.89vw; }
+  .wfstep .wf-icon { font-size: 1.89vw; }
+  .wfstep .wf-name { font-size: 1.01vw; line-height: 1.3; }
+  .wfstep:not(:last-child)::after { font-size: 1.95vw; }
+
+  /* === takeaway === */
+  .takeaway { font-size: 1.8vw; padding: 1.35vw 1.7vw; }
+  .takeaway .accent { font-size: 2.11vw; }
+  .takeaway .small { font-size: 1.22vw; }
+
+  /* === mission slide (②) は触らない指示だが、テキストノードクラスは保持 === */
+
+  /* === content-body 余白を少し詰めて文字優先 === */
+  .content-body { padding: 1.5vw 2.4vw 1.4vw 2.4vw; gap: 0.95vw; }
+  .note-body { padding: 1.5vw 2.4vw; gap: 0.95vw; }
+  .term-body { padding: 1.0vw 2.0vw 0.8vw 2.0vw; gap: 0.55vw; }
+  .term-grid { gap: 0.45vw; }
+  .term-card { padding: 0.5vw 0.85vw; gap: 0.1vw; }
+
+  /* ================================================================
+   * v6: さらに文字底上げ（v5でも小さく見える要素を強化）
+   * ============================================================= */
+
+  /* 用語解説 */
+  .term-card .term-name { font-size: 1.13vw; }
+  .term-card .term-def { font-size: 0.95vw; line-height: 1.5; }
+  .term-card { padding: 0.55vw 0.9vw; gap: 0.12vw; }
+
+  /* 補足/講師ノート系 */
+  .note-section .h { font-size: 1.59vw; }
+  .note-section li { font-size: 1.32vw; line-height: 1.7; }
+  .note-qa .h { font-size: 1.59vw; }
+  .qa-row { font-size: 1.24vw; line-height: 1.65; padding: 0.45vw 0; }
+
+  /* データテーブル */
+  .dt { font-size: 1.27vw; }
+  .dt th { font-size: 1.22vw; }
+  .dt th, .dt td { padding: 0.6vw 0.8vw; }
+
+  /* key-msg */
+  .key-msg { font-size: 1.53vw; padding: 1vw 1.5vw; }
+  .key-msg .label { font-size: 1.11vw; }
+
+  /* info-card */
+  .info-card { font-size: 1.17vw; line-height: 1.55; }
+  .info-card .h { font-size: 1.32vw; }
+
+  /* trio-card */
+  .trio-card { font-size: 1.0vw; padding: 0.65vw 0.85vw; }
+  .trio-card .h { font-size: 1.15vw; }
+
+  /* box (汎用) */
+  .box { font-size: 1.27vw; padding: 0.85vw 1.15vw; }
+  .box .h { font-size: 1.42vw; }
+
+  /* player-card */
+  .player-card .ptag { font-size: 1.11vw; padding: 0.25vw 0.7vw; }
+  .player-card .pname { font-size: 1.59vw; }
+  .player-card .prow { font-size: 1.17vw; line-height: 1.6; }
+  .player-card .strat { font-size: 1.22vw; padding: 0.5vw 0.75vw; }
+
+  /* bank-card */
+  .bank-card { font-size: 1.11vw; line-height: 1.55; padding: 0.85vw 1vw; }
+  .bank-card .h { font-size: 1.32vw; }
+  .bank-num { width: 1.85vw; height: 1.85vw; line-height: 1.85vw; font-size: 1.11vw; }
+
+  /* flow-step (横並び 8ステップ) */
+  .flow-step .step-num { font-size: 1.05vw; }
+  .flow-step .step-name { font-size: 1.27vw; line-height: 1.25; }
+  .flow-step .step-desc { font-size: 1.01vw; line-height: 1.5; }
+
+  /* case-card / barcmp */
+  .case-card .case-tag { font-size: 1.17vw; }
+  .case-card .case-h { font-size: 1.47vw; }
+  .case-card .dt { font-size: 1.05vw; }
+  .case-card .dt th, .case-card .dt td { padding: 0.4vw 0.55vw; }
+  .barcmp-card .bcmp-tag { font-size: 1.17vw; }
+  .barcmp-card .bcmp-h { font-size: 1.47vw; }
+  .bar-row { font-size: 1.11vw; grid-template-columns: 4.5vw 1fr 5.5vw; }
+  .bar-yr { font-size: 1.11vw; }
+  .bar-net { font-size: 1.17vw; }
+  .bar-area { height: 2.0vw; }
+  .bar-debt, .bar-asset, .bar-fixed { font-size: 0.98vw; }
+  .bar-legend { font-size: 1.05vw; }
+  .bar-legend .swatch { width: 1.05vw; height: 1.05vw; }
+
+  /* 失敗系 */
+  .fail-list { font-size: 1.17vw; line-height: 1.65; }
+  .fail-list .h { font-size: 1.38vw; }
+  .fail-compact { font-size: 1.17vw; padding: 0.85vw 1.15vw; }
+  .fail-compact .h { font-size: 1.38vw; }
+  .fail-compact .frow { font-size: 1.17vw; }
+
+  /* step-row */
+  .step-row .step-c { font-size: 1.32vw; line-height: 1.6; }
+  .step-row .step-n { width: 2.5vw; height: 2.5vw; font-size: 1.32vw; }
+
+  /* group3 */
+  .gcol-tag { font-size: 1.38vw; padding: 0.5vw 0.6vw; }
+  .gcol-headline { font-size: 1.95vw; }
+  .gcol-item .gicon { font-size: 2.28vw; }
+  .gcol-item .gname { font-size: 1.47vw; }
+  .gcol-item .gnote { font-size: 1.05vw; }
+  .gcol-msg { font-size: 1.22vw; padding: 0.65vw 0.85vw; }
+
+  /* icon-step */
+  .istep-num { width: 3vw; height: 3vw; font-size: 1.75vw; top: -1.5vw; }
+  .istep-icon { font-size: 4.12vw; }
+  .istep-name { font-size: 1.84vw; }
+  .istep-desc { font-size: 1.27vw; line-height: 1.65; }
+
+  /* bigstep */
+  .bigstep .bs-num { font-size: 0.85vw; }
+  .bigstep .bs-icon { font-size: 2.1vw; }
+  .bigstep .bs-name { font-size: 1.22vw; }
+  .bigstep .bs-desc { font-size: 0.92vw; line-height: 1.5; }
+  .bigstep:not(:last-child)::after { font-size: 1.22vw; }
+
+  /* tier4 */
+  .tier-num { font-size: 3.17vw; }
+  .tier-title { font-size: 1.84vw; }
+  .tier-title span { font-size: 1.38vw !important; }
+  .tier-desc { font-size: 1.27vw; line-height: 1.55; }
+  .tier-status { font-size: 1.64vw; padding: 0.55vw 0.7vw; }
+
+  /* pyramid */
+  .pyr-bar { font-size: 1.32vw; padding: 0.75vw 1.2vw; }
+  .pyr-bar .pyr-num { width: 1.85vw; height: 1.85vw; font-size: 1.17vw; }
+  .pyr-note { font-size: 1.11vw; line-height: 1.5; }
+  .pyr-side { font-size: 1.17vw; }
+  .pyr-side .h { font-size: 1.38vw; }
+  .pyr-side .order { font-size: 1.17vw; }
+  .pyr-side .order-num { width: 1.75vw; height: 1.75vw; font-size: 1.11vw; }
+
+  /* profit-card */
+  .profit-icon { font-size: 3vw; }
+  .profit-name { font-size: 1.84vw; }
+  .profit-tag { font-size: 1.11vw; }
+  .profit-desc { font-size: 1.27vw; line-height: 1.65; }
+  .rate-table { font-size: 1.22vw; }
+  .rate-table th { font-size: 1.17vw; }
+  .rate-table th, .rate-table td { padding: 0.6vw 0.95vw; }
+
+  /* type-row */
+  .type-tag { font-size: 1.59vw; }
+  .type-name { font-size: 1.59vw; }
+  .type-strat { font-size: 1.24vw; line-height: 1.65; }
+
+  /* rmap (8列横並び) */
+  .rmap-step .rn { font-size: 1.05vw; }
+  .rmap-step .ricon { font-size: 2.16vw; }
+  .rmap-step .rname { font-size: 1.17vw; line-height: 1.3; }
+  .rmap-step .rdesc { font-size: 1.01vw; line-height: 1.5; }
+  /* rmap-v 横向き */
+  .rstep-v .vn { font-size: 0.7vw; }
+  .rstep-v .vicon { font-size: 1.85vw; }
+  .rstep-v .vname { font-size: 0.92vw; }
+  .rarrow { font-size: 1.5vw; }
+
+  /* work2-card */
+  .work2-icon { font-size: 2.9vw; }
+  .work2-tag { font-size: 1.17vw; }
+  .work2-title { font-size: 1.8vw; }
+  .work2-body { font-size: 1.24vw; line-height: 1.7; }
+
+  /* task-card */
+  .task-card .ticon { font-size: 3vw; }
+  .task-card .tname { font-size: 1.53vw; }
+  .task-card .tnum { font-size: 2.16vw; }
+  .task-card .tnum .unit { font-size: 1.17vw; }
+  .task-card .tdesc { font-size: 1.11vw; line-height: 1.55; }
+
+  /* wfstep (横長8ステップ) */
+  .wfstep .wf-num { font-size: 1.01vw; }
+  .wfstep .wf-icon { font-size: 2.06vw; }
+  .wfstep .wf-name { font-size: 1.11vw; line-height: 1.35; }
+
+  /* takeaway */
+  .takeaway { font-size: 1.95vw; padding: 1.4vw 1.8vw; }
+  .takeaway .accent { font-size: 2.33vw; }
+  .takeaway .small { font-size: 1.32vw; }
+
+  /* 評価カード ratings (⑤旧使用) */
+  .rcard .rc-name { font-size: 1.38vw; }
+  .rcard .rc-tag { font-size: 0.89vw; padding: 0.18vw 0.6vw; }
+  .rcard .rc-icon { font-size: 1.95vw; }
+  .rcard .rc-rating { font-size: 1.01vw; }
+  .rcard .rc-rating .rl { font-size: 1.01vw; }
+  .rcard .rc-stars { font-size: 1.22vw; }
+  .rcard .rc-comment { font-size: 1.05vw; line-height: 1.5; }
+
+  /* 階段 (⑥) */
+  .stair-rank { font-size: 1.05vw; }
+  .stair-name { font-size: 1.32vw; }
+  .stair-bank { font-size: 1.11vw; line-height: 1.6; }
+  .stair-strat { font-size: 1.05vw; padding: 0.45vw 0.65vw; }
+
+  /* 散布図 (旧③) */
+  .sc-lbl { font-size: 1.17vw; padding: 0.4vw 0.75vw; }
+  .sc-pt.hero .sc-lbl { font-size: 1.47vw; }
+
+  /* hero compare (現⑬以外で使用) */
+  .hero-headline { font-size: 2.06vw; }
+  .hero-num { font-size: 4.21vw; }
+  .hero-num .small { font-size: 1.53vw; }
+  .hero-msg { font-size: 1.22vw; line-height: 1.6; }
+  .hero-tag { font-size: 1.22vw; padding: 0.35vw 1.2vw; }
+
+  /* moneyflow (④旧 → 現スライド⑫まで使用なし) */
+  .mf-label { font-size: 1.38vw; }
+  .mf-sub { font-size: 1.05vw; }
+  .mf-arrow .lbl { font-size: 1.01vw; }
+
+  /* mission conclusion など mission slideは指示で触らない => 触らない */
+
+  @media print {
+    .nav, .progress-bar, .help-hint { display: none; }
+    body { background: white; }
+    .slide-container { box-shadow: none; border-radius: 0; width: 100%; height: 100vh; page-break-after: always; }
+    .slide { display: flex !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width: 2.32558%;"></div>
+
+<div class="presentation">
+  <div class="slide-container">
+
+    <!-- ===== Slide 2: Mission ===== -->
+    <div class="slide active"><div class="slide-fit" style="width: 81.938%; height: 81.938%; transform: scale(1.22043);">
+
+      <!-- Header -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="top-bar-title">BODが目指すもの</div>
+        </div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+
+      <!-- Body -->
+      <div class="mission-body">
+
+        <div class="mission-catch-wrap">
+          <div class="mission-catch">すべての人を<span class="accent">豊かに</span>する</div>
+          <div class="mission-sub">― BOD（バランス大家大学）が目指すもの ―</div>
+        </div>
+
+        <div class="mission-grid">
+
+          <!-- 左: 学べる人 -->
+          <div class="mc-card have">
+            <div class="mc-icon">💼</div>
+            <div class="mc-tag">高　属　性</div>
+            <div class="mc-title">持てる者</div>
+            <div class="mc-body">
+              高属性の人は <strong>数十万円の教材</strong>に課金でき、<br>
+              質の高い学びを得て<strong>さらに豊かになる</strong>。
+            </div>
+          </div>
+
+          <!-- 中央 VS -->
+          <div class="mc-divider">
+            <div class="mc-divider-line"></div>
+            <div class="mc-vs">VS</div>
+            <div class="mc-divider-line"></div>
+          </div>
+
+          <!-- 右: 学べない人 -->
+          <div class="mc-card havenot">
+            <div class="mc-icon">💸</div>
+            <div class="mc-tag">低　属　性</div>
+            <div class="mc-title">持たざる者</div>
+            <div class="mc-body">
+              <strong>お金がない</strong> → 課金できない<br>
+              → 学べない → <strong>豊かになれない</strong> 悪循環。
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mission-bridge">
+          <div class="bridge-label">この格差<span class="arrow">▼</span>を超える</div>
+        </div>
+
+        <div class="mission-conclusion">
+          <div class="mc-headline">持たざる人にこそ、<span class="accent">豊かになるきっかけ</span>を。</div>
+          <div class="mc-supplement">
+            BODは、これまで<strong>高額教材にしかなかった学び</strong>を、誰でもアクセスできる形で届ける。
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div>私たちが目指すもの</div>
+      </div>
+
+    </div></div>
+    <!-- ===== Slide 2 end ===== -->
+
+    <!-- ===== Slide 1: 講師紹介 ===== -->
+    <div class="slide"><div class="slide-fit">
+
+      <!-- Header -->
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="top-bar-title">BOD学長紹介</div>
+        </div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+
+      <!-- Body -->
+      <div class="body-grid">
+
+        <!-- Left: Photo + name -->
+        <div class="left-col">
+          <div class="photo-frame">
+            <img src="./講師紹介 _ バランス大家大学 (BOD)_files/ハルキさん画像.png" alt="講師写真">
+          </div>
+          <div class="name-block">
+           
+            <div class="name-jp">バランス大家</div>
+          </div>
+        </div>
+
+        <!-- Right: bio -->
+        <div class="right-col">
+
+          <div class="catch">
+            実需仲介から始まり、<span class="accent">2年半で家賃収入1億円</span>。<br>
+            横浜・横須賀ドミナントで賃貸売上2億円へ。
+          </div>
+
+          <div class="timeline">
+            <div class="tl-row">
+              <div class="tl-age">1979</div>
+              <div class="tl-text"><strong>誕生</strong> ─ 実需不動産会社の次男として生まれる</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-age">30歳</div>
+              <div class="tl-text"><strong>独立</strong> ─ 実需仲介を開始</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-age">33歳</div>
+              <div class="tl-text">初の<strong>新築投資</strong> ─ <span class="num">3,500万円</span>／利回り<span class="num">10%</span></div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-age">37歳</div>
+              <div class="tl-text">物件売却資金で<span class="num">5,500万円</span>の新築を企画</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-age">40歳</div>
+              <div class="tl-text"><strong>賃貸売上 <span class="num">3,000万円</span></strong> 達成</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-age">転機</div>
+              <div class="tl-text">大家の会に参加。1年で<span class="num">戸建20戸＋アパート3棟</span>取得 → <strong>2年半で家賃収入1億円</strong></div>
+            </div>
+          </div>
+
+          <div class="now-box">
+            <div class="now-label">現　在</div>
+            <div class="now-item">
+              <div class="now-key">賃貸売上</div>
+              <div class="now-val">2<span class="unit">億円</span></div>
+            </div>
+            <div class="now-item">
+              <div class="now-key">運営室数</div>
+              <div class="now-val">300<span class="unit">室</span></div>
+            </div>
+            <div class="now-item">
+              <div class="now-key">戸建</div>
+              <div class="now-val">40<span class="unit">戸</span></div>
+            </div>
+            <div class="now-item">
+              <div class="now-key">民泊収入</div>
+              <div class="now-val">3,000<span class="unit">万円</span></div>
+            </div>
+            <div class="now-item">
+              <div class="now-key">エリア</div>
+              <div class="now-val" style="font-size: 1.22vw;">横浜・横須賀<span class="unit" style="margin-left:0.3vw;">ドミナント</span></div>
+            </div>
+          </div>
+
+          <div class="goal-row">
+            <div class="goal-card">
+              <div class="label">▲ 目　標</div>
+              <div class="value">60歳までに資産 <span class="accent">100億円</span></div>
+            </div>
+            <div class="community-card">
+              <div class="label">● コミュニティ</div>
+              <div class="value">関東大家の交流会 <strong>3,500名</strong>／バランス大家サロン <strong>1,000名超</strong></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div>講師紹介</div>
+      </div>
+
+    </div></div>
+    <!-- ===== Slide 1 end ===== -->
+
+    <!-- ============================================================
+         CH⑬  受講契約 ── 料金と期間（1枚もの）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑬ 受講契約 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">受講契約 ── 料金と期間</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">バランス大家大学　<span class="accent">受講契約</span></div>
+        </div>
+
+        <div class="contract-grid">
+          <div class="contract-card">
+            <div class="contract-tag">月額料金</div>
+            <div class="contract-num">2<span class="unit">万円</span><span class="tax">（税抜）</span></div>
+            <div class="contract-sub">毎月のお支払い</div>
+          </div>
+          <div class="contract-card">
+            <div class="contract-tag">最低契約期間</div>
+            <div class="contract-num">6<span class="unit">ヶ月</span><span class="tax">（途中解約不可）</span></div>
+            <div class="contract-sub">最低でも6ヶ月の継続が必要</div>
+          </div>
+          <div class="contract-card hot">
+            <div class="contract-tag">最低総額</div>
+            <div class="contract-num">12<span class="unit">万円</span><span class="tax">（税抜）</span></div>
+            <div class="contract-sub">2万円 × 6ヶ月</div>
+          </div>
+        </div>
+
+        <div class="benefit-banner">
+          <div class="benefit-icon">🏠</div>
+          <div class="benefit-text">
+            <div class="blabel">特　典</div>
+            受講中に物件を購入する際、バランス大家の宅建業法人 <strong class="accent">三春ソリューション（ミハルソリューション）</strong> が仲介に入る場合、仲介手数料の還元により <strong class="accent">受講料が実質無料</strong> になります。
+          </div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">契　約</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH③  資産の種類 ── 不動産投資とは（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ③-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">資産の種類 ── 不動産投資とは</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">💴 📈 💱 🏢 🏠</div>
+        <div class="intro-headline">あなたのお金、<span class="accent">どこに置きますか？</span></div>
+        <div class="intro-sub">資産には複数の種類がある。それぞれ性質が違う。</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>お金を置ける場所には複数の選択肢がある</li>
+            <li>各選択肢のリスク・リターン・性質の違い</li>
+            <li>不動産は「複数の資産の中の一つ」と位置づける</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ③-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">資産の種類 ── 5資産の特徴</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">5資産を<span class="accent">5軸</span>で比較</div>
+        </div>
+        <table class="dt">
+          <thead>
+            <tr><th style="width:22%">資産</th><th>リスク</th><th>リターン</th><th>コントロール性</th><th>手間</th><th>借入の可否</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>📈　株式</td><td>△</td><td>△</td><td>×（市場依存）</td><td>○</td><td>限定的（信用取引）</td></tr>
+            <tr><td>💱　FX・暗号資産</td><td>×</td><td>○</td><td>×（市場依存）</td><td>△</td><td>信用取引で可能</td></tr>
+            <tr><td>💴　現金預金</td><td>○（額面）</td><td>×（0.001%）</td><td>×</td><td>○</td><td>−</td></tr>
+            <tr><td>🏢　事業</td><td>×</td><td>○</td><td>○（自分で動かす）</td><td>×</td><td>限定的</td></tr>
+            <tr class="hi"><td>🏠　不動産</td><td>△</td><td>○</td><td>○（自分で動かす）</td><td>△（仕組化可）</td><td>物件担保で借入可能</td></tr>
+          </tbody>
+        </table>
+        <div class="key-msg mini">
+          <span class="label">補　足</span>不動産は他の資産と比べて「物件を担保に借入ができる」点が特徴とされる。
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ③-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">資産の種類 ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>現金預金もインフレ進行下では実質目減りする話（物価変動の例：海外ランチ価格など）</li>
+            <li>FX・暗号資産の信用取引で大きく動く例（追証で家を売却相談された経験）</li>
+            <li>事業との対比（労働集約・時間との関係／サラリーマンも一人事業者）</li>
+            <li>不動産の仕組化（管理会社・客付け会社・リフォーム業者）が他資産との違い</li>
+            <li>「借入で買える資産」という観点が他資産と決定的に違う</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">投資信託は？</div><div class="qa-a">株のカテゴリで扱うか別途追加するかを選ぶ</div></div>
+          <div class="qa-row"><div class="qa-q">金（ゴールド）は？</div><div class="qa-a">現金預金と類似性質（コントロール性低）</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ③-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">資産の種類 ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">リスク</div><div class="term-def">価格変動の振れ幅</div></div>
+          <div class="term-card"><div class="term-name">リターン</div><div class="term-def">得られる利益の期待値</div></div>
+          <div class="term-card"><div class="term-name">コントロール性</div><div class="term-def">自分の判断・行動で結果を変えられる度合い</div></div>
+          <div class="term-card"><div class="term-name">レバレッジ</div><div class="term-def">少ない自己資金で大きな金額を動かす仕組み（てこの原理）</div></div>
+          <div class="term-card"><div class="term-name">インフレ</div><div class="term-def">物価が上がること（＝お金の購買力が下がる）</div></div>
+          <div class="term-card"><div class="term-name">追証</div><div class="term-def">信用取引で評価損が一定額を超えた時に追加で求められる証拠金</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH④  ビジネスモデル ── 残債と純資産（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ④-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ビジネスモデル ── 残債と純資産</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">💴 ⏱️ 📊</div>
+        <div class="intro-headline">同じ手残り100万円でも、<br><span class="accent">10年後はまったく違う</span></div>
+        <div class="intro-sub">借入を使った場合と使わなかった場合の比較</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>借入を使った購入の仕組みを理解</li>
+            <li>「残債が減る」とは何か、時間軸でどう変化するか</li>
+            <li>純資産という概念の把握</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑮  残債減ゲーム清書（ホワイトボード起こし）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑮ 残債減ゲーム清書 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">残債減ゲーム ── 現金 vs 借入</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">同じ表面利回り<span class="accent">10%</span>、手残り<span class="accent">100万円</span>でも、借入によるレバレッジで大きく差がつく</div>
+        </div>
+
+        <div class="barcmp">
+
+          <!-- 左: 現金1,000万 -->
+          <div class="barcmp-card">
+            <div class="bcmp-tag">▼ 現金　1,000万円</div>
+            <div class="bcmp-h">現金1,000万で1,000万の物件を購入<br><span style="font-size: 0.92vw; color:var(--text-muted); font-weight:600;">→ 純資産が年間100万円ずつ増え、3年で1,300万円に</span></div>
+
+            <div class="cf-row">
+              <div class="cf-yr">1年目</div>
+              <div class="cf-bar"><div class="cf-asset cash" style="width:11%;">1,100</div></div>
+              <div class="cf-tail"><span class="cf-asset-label cash">純1,100万</span></div>
+            </div>
+            <div class="cf-row">
+              <div class="cf-yr">2年目</div>
+              <div class="cf-bar"><div class="cf-asset cash" style="width:12%;">1,200</div></div>
+              <div class="cf-tail"><span class="cf-asset-label cash">純1,200万</span></div>
+            </div>
+            <div class="cf-row">
+              <div class="cf-yr">3年目</div>
+              <div class="cf-bar"><div class="cf-asset cash" style="width:13%;">1,300</div></div>
+              <div class="cf-tail"><span class="cf-asset-label cash">純1,300万</span></div>
+            </div>
+
+            <div class="cf-legend">
+              <span><i class="sw sw-cash-asset"></i>純資産</span>
+              <span style="margin-left:auto; color:var(--navy-dark); font-weight:800;">→ 3年で純資産1,300万</span>
+            </div>
+          </div>
+
+          <!-- 右: 借入1,000+9,000 -->
+          <div class="barcmp-card hot">
+            <div class="bcmp-tag">▲ 借入　1,000 ＋ 9,000 ＝ 1億円</div>
+            <div class="bcmp-h">自己資金1,000万＋融資9,000万で1億円の物件<br><span style="font-size: 0.92vw; color:var(--accent-dark); font-weight:700;">→ 融資10年・毎年900万返済（金利無視）／手残り100万・純資産は年1,000万ずつ増加、3年で3,000万に</span></div>
+
+            <div class="cf-row">
+              <div class="cf-yr">1年目</div>
+              <div class="cf-bar"><div class="cf-debt" style="width:78%;">残債9,000万</div><div class="cf-asset" style="width:10%;">1,000</div></div>
+              <div class="cf-tail"><span class="cf-asset-label">純1,000万</span></div>
+            </div>
+            <div class="cf-row">
+              <div class="cf-yr">2年目</div>
+              <div class="cf-bar"><div class="cf-debt" style="width:68%;">残債8,000万</div><div class="cf-asset" style="width:20%;">2,000万</div></div>
+              <div class="cf-tail"><span class="cf-asset-label">純2,000万</span></div>
+            </div>
+            <div class="cf-row">
+              <div class="cf-yr">3年目</div>
+              <div class="cf-bar"><div class="cf-debt" style="width:58%;">残債7,000万</div><div class="cf-asset" style="width:30%;">3,000万</div></div>
+              <div class="cf-tail"><span class="cf-asset-label">純3,000万</span></div>
+            </div>
+
+            <div class="cf-legend">
+              <span><i class="sw sw-debt"></i>残債</span>
+              <span><i class="sw sw-asset"></i>純資産</span>
+              <span style="margin-left:auto; color:var(--accent-dark); font-weight:800;">▲ 3年で純資産3,000万</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="key-msg mini">
+          <span class="label">結　論</span>手残り100万円は同じでも、レバレッジを使うと <strong style="color:#fff;">入居者が毎年残債を減らしてくれる＝純資産が増える</strong>。<br>3年後に同額で売却した際の、諸費用を無視した税引き前キャピタルゲインで大きく差がつく ── <strong style="color:#fff;">現金：300万円　vs　借入：2,000万円</strong>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">資　料</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ④-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ビジネスモデル ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>借入を使うことのメリットと注意点（両面）</li>
+            <li>住宅ローンとの対比で借入を身近に理解できる</li>
+            <li>入居者の家賃が返済原資になる仕組み</li>
+            <li>利回り・返済比率・キャッシュフローの基本概念</li>
+            <li>借入に対して持ちやすい不安と、その対処の考え方</li>
+            <li>失敗事例（リフォーム業者倒産・先順位融資の選択など）は別途扱う</li>
+            <li>「残債が減るゲーム」とは ── 時間軸で見ると分かる</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">借金が怖い</div><div class="qa-a">住宅ローンとの対比、入居者が返してくれる仕組みを再説明</div></div>
+          <div class="qa-row"><div class="qa-q">金利が上がったら？</div><div class="qa-a">別スライドで扱うか、概要で触れる</div></div>
+          <div class="qa-row"><div class="qa-q">空室になったら？</div><div class="qa-a">返済比率・キャッシュフローの余裕の話</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ④-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ビジネスモデル ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">残債</div><div class="term-def">ローンの未返済残高</div></div>
+          <div class="term-card"><div class="term-name">純資産</div><div class="term-def">物件価値 − 残債</div></div>
+          <div class="term-card"><div class="term-name">元利均等返済</div><div class="term-def">毎月の返済額が一定の方式</div></div>
+          <div class="term-card"><div class="term-name">元金均等返済</div><div class="term-def">元金返済額が一定で、利息は残債に応じて変動</div></div>
+          <div class="term-card"><div class="term-name">利回り</div><div class="term-def">物件価格に対する年間家賃収入の割合（詳細は⑦）</div></div>
+          <div class="term-card"><div class="term-name">キャッシュフロー</div><div class="term-def">家賃収入から経費・返済を引いた手残り</div></div>
+          <div class="term-card"><div class="term-name">返済比率</div><div class="term-def">家賃収入に対する返済額の割合</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑤  金融機関の種類（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑤-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">金融機関の種類</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">🏦 🏪 🏛️</div>
+        <div class="intro-headline">融資元は<span class="accent">7カテゴリ</span>に分類される</div>
+        <div class="intro-sub">「銀行＝メガバンクだけ」ではない</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>「銀行」と一括りにされる融資元の種類を整理</li>
+            <li>各カテゴリの特徴と代表的な機関名を把握</li>
+            <li>自分が利用できそうなカテゴリの目星をつける</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑤-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">金融機関の種類 ── 7カテゴリ</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">7カテゴリの一覧</div>
+        </div>
+        <table class="dt" style="font-size: 0.95vw;">
+          <thead>
+            <tr style="font-size: 0.88vw;"><th style="width:5%; padding: 0.4vw 0.6vw;">#</th><th style="width:18%; padding: 0.4vw 0.6vw;">カテゴリ</th><th style="width:35%; padding: 0.4vw 0.6vw;">代表例</th><th style="padding: 0.4vw 0.6vw;">一般的な特徴</th></tr>
+          </thead>
+          <tbody style="line-height: 1.45;">
+            <tr><td style="padding: 0.4vw 0.6vw;">1</td><td style="padding: 0.4vw 0.6vw;">公的金融機関</td><td style="padding: 0.4vw 0.6vw;">日本政策金融公庫（マル経含む）</td><td style="padding: 0.4vw 0.6vw;">事業性を重視。自己資金1,000万円程度から</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">2</td><td style="padding: 0.4vw 0.6vw;">信用金庫</td><td style="padding: 0.4vw 0.6vw;">千葉信金／佐原信金 ほか</td><td style="padding: 0.4vw 0.6vw;">地域密着。営業エリア内が条件</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">3</td><td style="padding: 0.4vw 0.6vw;">信用組合</td><td style="padding: 0.4vw 0.6vw;">横浜興銀／医師組合系信組／千葉国民信組／大阪厚生信組／伊予信組 ほか</td><td style="padding: 0.4vw 0.6vw;">職域・地縁の互助組織。加入条件あり</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">4</td><td style="padding: 0.4vw 0.6vw;">地方銀行・第二地銀</td><td style="padding: 0.4vw 0.6vw;">千葉銀行／横浜銀行／筑波銀行／千葉興銀 ほか</td><td style="padding: 0.4vw 0.6vw;">地縁・取引実績が重要視されることが多い</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">5</td><td style="padding: 0.4vw 0.6vw;">都市銀行（メガバンク）</td><td style="padding: 0.4vw 0.6vw;">三菱UFJ／三井住友／みずほ</td><td style="padding: 0.4vw 0.6vw;">事業規模が大きい案件が中心</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">6</td><td style="padding: 0.4vw 0.6vw;">ノンバンク</td><td style="padding: 0.4vw 0.6vw;">AG／L&amp;F／アサックス／セゾン本体／出光クレジット／オリコ ほか</td><td style="padding: 0.4vw 0.6vw;">金利は高め。スピード・柔軟性が特徴</td></tr>
+            <tr><td style="padding: 0.4vw 0.6vw;">7</td><td style="padding: 0.4vw 0.6vw;">アパートローン専業</td><td style="padding: 0.4vw 0.6vw;">オリックス銀行／auじぶん銀行／東和銀行／山陰合同銀行（最長25年）</td><td style="padding: 0.4vw 0.6vw;">規格化された融資商品が中心</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑤-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">金融機関の種類 ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>利用順序の考え方（一般的に言われている順序や注意点）</li>
+            <li>地域の銀行の使い分け事例</li>
+            <li>カテゴリ間の使い分けの実例</li>
+            <li>借入条件（金利・期間・自己資金比率）の概観</li>
+            <li>担当者との関係構築（人と人の取引）</li>
+            <li>三春ソリューション提携の実例</li>
+            <li>ノンバンク利用時の留意点（順序の影響）</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">メガバンクに口座があるけど借りられる？</div><div class="qa-a">預金取引と融資審査は別の話</div></div>
+          <div class="qa-row"><div class="qa-q">地方在住だが東京の物件を買える？</div><div class="qa-a">営業エリアと物件所在地の関係</div></div>
+          <div class="qa-row"><div class="qa-q">ネット銀行は？</div><div class="qa-a">アパートローン専業に分類</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑤-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">金融機関の種類 ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">ノンバンク</div><div class="term-def">銀行業ではない金融機関（信販系・消費者金融系を含む）</div></div>
+          <div class="term-card"><div class="term-name">マル経</div><div class="term-def">商工会議所の推薦を受けて利用する公庫の特別貸付</div></div>
+          <div class="term-card"><div class="term-name">第二地銀</div><div class="term-def">旧相互銀行から普通銀行に転換した地方銀行</div></div>
+          <div class="term-card"><div class="term-name">プロパー融資</div><div class="term-def">保証会社を通さない、銀行独自の判断による融資</div></div>
+          <div class="term-card"><div class="term-name">アパートローン</div><div class="term-def">賃貸用集合住宅向けの規格化された融資商品</div></div>
+          <div class="term-card"><div class="term-name">信用金庫／信用組合</div><div class="term-def">根拠法が異なる（信金法／中小企業等協同組合法）。信組は職域・地縁の互助組織</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑥  ワーク① 金融機関リサーチ＆テレアポ（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑥-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク① 金融機関リサーチ＆テレアポ</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">📊 📞 📝</div>
+        <div class="intro-headline">机上の知識を「<span class="accent">使える知識</span>」に変える</div>
+        <div class="intro-sub">自分の地域・属性に合う金融機関を実際にリサーチ</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>知識として知った金融機関を、自分の状況で具体化する手順</li>
+            <li>電話で情報を得る一連の流れの体験準備</li>
+            <li>自分専用の金融機関リストを作るゴール意識</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑥-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク① ── 金融機関リストを作る</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">📋 自分専用の<span class="accent">金融機関リスト</span>を作る</div>
+        </div>
+        <div class="bigsteps">
+          <div class="bigstep"><div class="bs-num">ステップ ①</div><div class="bs-icon">📊</div><div class="bs-name">一覧化</div><div class="bs-desc">エクセルテンプレに記入：機関名／住所／電話／担当エリア／所感</div></div>
+          <div class="bigstep"><div class="bs-num">ステップ ②</div><div class="bs-icon">🎯</div><div class="bs-name">3軸で絞込</div><div class="bs-desc">自宅 × 勤務先 × 物件想定エリアで対象を絞る</div></div>
+          <div class="bigstep"><div class="bs-num">ステップ ③</div><div class="bs-icon">📞</div><div class="bs-name">テレアポ</div><div class="bs-desc">電話スクリプト雛形をベースに実際にかける</div></div>
+          <div class="bigstep"><div class="bs-num">ステップ ④</div><div class="bs-icon">📝</div><div class="bs-name">記録</div><div class="bs-desc">担当者・条件・対応をシートに追記して蓄積</div></div>
+        </div>
+        <div class="trio">
+          <div class="trio-card"><div class="h">📦 提供物</div>金融機関リサーチ用エクセルテンプレ／電話スクリプト雛形</div>
+          <div class="trio-card" style="background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%); border-left-color:#fff3;"><div class="h" style="color:#fff;">🤝 サポート</div>分からないところは <strong style="color:#fff;">エージェント（先輩大家）に相談</strong> できます。同行・代行支援もあり。</div>
+          <div class="trio-card"><div class="h">🎯 成果物</div>自分専用の <strong>金融機関リスト</strong>（最低10件目安）</div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑥-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク① ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>電話する際のマナー・聞き方の例</li>
+            <li>担当者の反応の読み方（前向き／そっけない／窓口たらい回し など）</li>
+            <li>1回のリサーチで何件くらい当たるべきかの目安</li>
+            <li>返事に時間がかかる場合の進め方</li>
+            <li>初心者がつまずきやすい点（電話への抵抗感など）</li>
+            <li>「自分でアクションが起こせない」のは多くの初心者に共通する</li>
+            <li>エージェント支援の活用法（一人で詰まったら相談）</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">いきなり電話していいの？</div><div class="qa-a">アポ取りの基本マナーから案内</div></div>
+          <div class="qa-row"><div class="qa-q">何を聞けばいい？</div><div class="qa-a">電話スクリプト雛形の中身を提示</div></div>
+          <div class="qa-row"><div class="qa-q">断られた時は？</div><div class="qa-a">次に行く割り切り、件数で動く</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑥-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク① ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">テレアポ</div><div class="term-def">電話によるアポイント取得（ここでは融資条件の問い合わせを含む）</div></div>
+          <div class="term-card"><div class="term-name">担当エリア</div><div class="term-def">その金融機関が融資対象とする地域範囲</div></div>
+          <div class="term-card"><div class="term-name">所感</div><div class="term-def">電話・面談での印象・手応えのメモ</div></div>
+          <div class="term-card"><div class="term-name">エージェント</div><div class="term-def">BODにおける先輩大家の支援役</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑦  利益の種類 ── 利回り・売却益（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑦-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">利益の種類 ── 利回り・売却益</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">💰 📈</div>
+        <div class="intro-headline">不動産で稼ぐ＝<span class="accent">2種類ある</span></div>
+        <div class="intro-sub">「利回り」と「売却益」の違いを理解する</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>「儲け」と一言で言われるものの中身を理解</li>
+            <li>運用中の収益（インカムゲイン）と売却時の収益（キャピタルゲイン）の違い</li>
+            <li>利回りの種類（表面／実質／自己資金）を把握</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑦-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">利益の種類 ── 2種類＋利回り3種</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">利益の<span class="accent">2種類</span> と 利回り<span class="accent">3種類</span></div>
+        </div>
+        <div class="profit-2">
+          <div class="profit-card income">
+            <div class="profit-head"><div class="profit-icon">💰</div><div><div class="profit-tag">運用利益</div><div class="profit-name">インカムゲイン</div></div></div>
+            <div class="profit-desc"><strong>毎月（保有中）</strong>に入る収益。<br>家賃収入から経費・返済を引いた手残り。</div>
+          </div>
+          <div class="profit-card capital">
+            <div class="profit-head"><div class="profit-icon">📈</div><div><div class="profit-tag">売却利益</div><div class="profit-name">キャピタルゲイン</div></div></div>
+            <div class="profit-desc"><strong>売却時</strong>に発生する差益。<br>売却額 −（取得額＋諸費用＋残債）</div>
+          </div>
+        </div>
+        <table class="rate-table">
+          <thead><tr><th style="width:25%">利回り</th><th style="width:42%">計算式</th><th>主な用途</th></tr></thead>
+          <tbody>
+            <tr><td><strong>表面利回り</strong></td><td class="formula">年間家賃 ÷ 物件価格</td><td>第1段階のスクリーニング</td></tr>
+            <tr><td><strong>実質利回り（NOI利回り）</strong></td><td class="formula">(年間家賃 − 経費) ÷ (物件価格 + 諸費用)</td><td>実際の収益性判断</td></tr>
+            <tr><td><strong>自己資金利回り（CCR）</strong></td><td class="formula">年間手残り ÷ 自己資金</td><td>レバレッジ効果の評価</td></tr>
+          </tbody>
+        </table>
+        <div class="key-msg mini">
+          <span class="label">補　足</span>売却益の発生パターン：出来高益／残債減による純資産増／市場価格上昇 ── など複数あり。
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑦-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">利益の種類 ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>表面利回りだけ見て買うと失敗するケース</li>
+            <li>実質利回り（NOI）をどこまで詰めるか</li>
+            <li>CCR（自己資金利回り）の本質的な意味</li>
+            <li>出口戦略（持ち続ける／売る）の判断軸</li>
+            <li>売却益狙いと家賃収入狙いの戦略の違い</li>
+            <li>実例：利回りで買った物件と売却益で稼いだ物件の対比</li>
+            <li>利回り高い物件＝良い物件、ではない（築古・地方・空室リスク等）</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">利回り何%以上が目安？</div><div class="qa-a">物件種別・エリア・自分の戦略で変わる（一般論を提示）</div></div>
+          <div class="qa-row"><div class="qa-q">売却益はいつ取るのがベスト？</div><div class="qa-a">出口戦略の話、一概には言えない</div></div>
+          <div class="qa-row"><div class="qa-q">経費って何が入る？</div><div class="qa-a">管理費・修繕費・固定資産税・保険など</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑦-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">利益の種類 ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">インカムゲイン</div><div class="term-def">保有中に継続的に得る収益（家賃収入ベース）</div></div>
+          <div class="term-card"><div class="term-name">キャピタルゲイン</div><div class="term-def">売却時に得る差益</div></div>
+          <div class="term-card"><div class="term-name">表面利回り</div><div class="term-def">経費を引かない単純な利回り（広告・チラシで使われることが多い）</div></div>
+          <div class="term-card"><div class="term-name">実質利回り（NOI）</div><div class="term-def">経費差し引き後の利回り。NOI＝Net Operating Income</div></div>
+          <div class="term-card"><div class="term-name">自己資金利回り（CCR）</div><div class="term-def">自己資金に対する手残り率。CCR＝Cash on Cash Return</div></div>
+          <div class="term-card"><div class="term-name">出口戦略</div><div class="term-def">物件をいつどう売るかの計画</div></div>
+          <div class="term-card"><div class="term-name">含み益</div><div class="term-def">まだ売っていないが、売れば出る利益（評価益）</div></div>
+          <div class="term-card"><div class="term-name">諸費用</div><div class="term-def">登記費用・仲介手数料・税金など物件価格以外の費用</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑧  不動産投資の種類（マトリクス）（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑧-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">不動産投資の種類</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">🏘️ 🏬 🏢 🏗️ 🏛️ 🛏️</div>
+        <div class="intro-headline">不動産投資には<span class="accent">複数の手法</span>がある</div>
+        <div class="intro-sub">それぞれ性質が異なる ── 6種類を比較</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>6種類の手法を一覧で把握</li>
+            <li>各手法の特性（資金規模・難易度・収益性・手間・拡大性）を理解</li>
+            <li>自分のリスク許容度・資金で選ぶ視点を得る</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑧-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">不動産投資の種類 ── 6種マトリクス</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">6手法を<span class="accent">6軸</span>で比較</div>
+        </div>
+        <table class="dt">
+          <thead>
+            <tr><th style="width:22%">種別</th><th>自己資金</th><th>難易度</th><th>インカム</th><th>キャピタル</th><th>手間</th><th>規模拡大</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>🏘️　戸建</td><td>○〜△</td><td>○</td><td>△</td><td>△</td><td>△</td><td>△</td></tr>
+            <tr><td>🏬　区分（ワンルーム）</td><td>○</td><td>○</td><td>×</td><td>×</td><td>○</td><td>×</td></tr>
+            <tr><td>🏢　アパート（木造）</td><td>△</td><td>△</td><td>△</td><td>△</td><td>△</td><td>○</td></tr>
+            <tr><td>🏗️　RC造・中古再生</td><td>△〜×</td><td>×</td><td>△〜○</td><td>△</td><td>×</td><td>◎</td></tr>
+            <tr><td>🏛️　土地から新築</td><td>△〜×</td><td>×</td><td>◎</td><td>◎（出来高益）</td><td>△</td><td>◎</td></tr>
+            <tr><td>🛏️　民泊</td><td>△</td><td>△</td><td>○（変動）</td><td>△</td><td>×</td><td>○</td></tr>
+          </tbody>
+        </table>
+        <div class="key-msg mini">
+          <span class="label">補　足</span>区分（ワンルーム）は節税商品として販売されることが多いとされる。各手法の選び方は受講者の状況による。
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑧-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">不動産投資の種類 ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>各手法の実例</li>
+            <li>区分（ワンルーム）が販売される文脈・営業手法</li>
+            <li>規模拡大という視点の重要性</li>
+            <li>各手法の出口戦略（売却・運用継続）</li>
+            <li>手法を組み合わせるパターン（戸建で経験→新築へ など）</li>
+            <li>リスク許容度・自己資金・使える時間で選び方が変わる</li>
+            <li>民泊の運営の実態（手間・規制・季節変動）</li>
+            <li>スライド④（残債減）を踏まえると、このマトリクスは理解しやすい</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">初心者は何から？</div><div class="qa-a">自己資金と覚悟次第（一般論を提示）</div></div>
+          <div class="qa-row"><div class="qa-q">ワンルームはダメなの？</div><div class="qa-a">インカム×キャピタル×の前提と「規模拡大の視点」を併記</div></div>
+          <div class="qa-row"><div class="qa-q">どれが儲かる？</div><div class="qa-a">利益の種類（⑦）を踏まえて回答</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑧-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">不動産投資の種類 ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">インカム</div><div class="term-def">家賃収入（毎月の収入）</div></div>
+          <div class="term-card"><div class="term-name">キャピタル</div><div class="term-def">売却益（売却時の差益）</div></div>
+          <div class="term-card"><div class="term-name">RC造</div><div class="term-def">鉄筋コンクリート造</div></div>
+          <div class="term-card"><div class="term-name">木造</div><div class="term-def">木造軸組工法・2×4工法など、木材を主体とした構造</div></div>
+          <div class="term-card"><div class="term-name">出来高益</div><div class="term-def">建築原価と完成物件価値の差額（含み益）</div></div>
+          <div class="term-card"><div class="term-name">規模拡大</div><div class="term-def">保有物件数・総資産を増やしていけるか</div></div>
+          <div class="term-card"><div class="term-name">再生</div><div class="term-def">中古物件を購入してリフォーム・改修し価値を高める手法</div></div>
+          <div class="term-card"><div class="term-name">区分</div><div class="term-def">マンション1室単位での所有</div></div>
+          <div class="term-card"><div class="term-name">民泊</div><div class="term-def">住宅を活用した宿泊サービス（民泊新法・特区民泊など）</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑨  自分は何者か（属性別の選択肢）（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑨-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">自分は何者か ── 属性別の選択肢</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">👨‍💼 👩‍💼 👨‍💻 🧑‍🍳</div>
+        <div class="intro-headline">属性で<span class="accent">使える融資・取れる戦略</span>が変わる</div>
+        <div class="intro-sub">あなたはどのタイプ？</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>自分のタイプを把握</li>
+            <li>そのタイプで一般的にどんな選択肢があるか知る</li>
+            <li>「次に動くべき方向」の目星をつける</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑨-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">自分は何者か ── 4タイプ別の選択肢</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">4タイプ × 利用できる融資 × 戦略例</div>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+          <div class="type-row">
+            <div class="type-tag">A</div>
+            <div class="type-name">会社員<br>年収500万円以下</div>
+            <div class="type-strat"><span class="lbl">融資例：</span>ノンバンク／地元信金・信組（限定的）／関西圏の一部地銀（滋賀銀行など）／セゾン<br><span class="lbl">戦略例：</span>物件特性で勝負。戸建・小ぶり中古から</div>
+          </div>
+          <div class="type-row">
+            <div class="type-tag">B</div>
+            <div class="type-name">会社員<br>年収500〜700万円</div>
+            <div class="type-strat"><span class="lbl">融資例：</span>オリックス／AG／信金・信組／地銀の一部<br><span class="lbl">戦略例：</span>属性と物件のバランスで進める</div>
+          </div>
+          <div class="type-row hi">
+            <div class="type-tag">C</div>
+            <div class="type-name">会社員<br>年収700万円以上</div>
+            <div class="type-strat"><span class="lbl">融資例：</span>地銀全般／アパートローン／ノンバンクも条件次第<br><span class="lbl">戦略例：</span>規模拡大も視野に。新築・RC造再生も選択肢</div>
+          </div>
+          <div class="type-row hi">
+            <div class="type-tag">D</div>
+            <div class="type-name">自営業・事業家<br>法人経営者</div>
+            <div class="type-strat"><span class="lbl">融資例：</span>公庫／地元信金・信組／地銀（事業性評価）<br><span class="lbl">戦略例：</span>法人スキーム活用／事業との相乗効果</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑨-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">自分は何者か ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>属性が低めでも例外的に道が開いた事例</li>
+            <li>配偶者合算の活用例</li>
+            <li>関西圏の地銀の特殊性（滋賀銀行など）</li>
+            <li>属性アップ（転職・副業・事業所得）で選択肢が広がる</li>
+            <li>属性に縛られすぎない物件力での勝負も可能</li>
+            <li>法人化のタイミングの考え方</li>
+            <li>自営業者が公庫を活用する典型パターン</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">年収はどこまで上げられる？</div><div class="qa-a">属性アップの選択肢を提示</div></div>
+          <div class="qa-row"><div class="qa-q">法人化はいつ？</div><div class="qa-a">物件規模・所得税率の話</div></div>
+          <div class="qa-row"><div class="qa-q">副業所得は属性に入る？</div><div class="qa-a">銀行による（一般論として）</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑨-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">自分は何者か ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">属性</div><div class="term-def">年収・職業・勤続年数など、金融機関が個人を評価する要素</div></div>
+          <div class="term-card"><div class="term-name">連帯保証</div><div class="term-def">配偶者など他者が一緒に返済責任を負うこと</div></div>
+          <div class="term-card"><div class="term-name">事業性評価</div><div class="term-def">事業の将来性や持続性を見て融資判断する手法</div></div>
+          <div class="term-card"><div class="term-name">法人スキーム</div><div class="term-def">個人ではなく法人で物件を保有・運用する方式</div></div>
+          <div class="term-card"><div class="term-name">合算</div><div class="term-def">配偶者など複数人の所得を合計して融資審査の対象とすること</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑩  ワーク② プロフィールシート＋AIツール（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑩-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク② プロフィールシート＋AIツール</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">📋 🤖</div>
+        <div class="intro-headline">自分の<span class="accent">プロフィールシート</span>を作って、<br>AIに最適銀行を診断してもらう</div>
+        <div class="intro-sub">第1章のアウトプット ── 自分の現状を可視化する</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>自分の現在地を可視化する手順</li>
+            <li>AIツール体験で具体的な金融機関候補を得る方法</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑩-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク② ── 2ワークの内容</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">2つのワーク</div>
+        </div>
+        <div class="work2">
+          <div class="work2-card sheet">
+            <div class="work2-head"><div class="work2-icon">📋</div><div><div class="work2-tag">ワーク ①</div><div class="work2-title">プロフィールシート</div></div></div>
+            <div class="work2-body">
+              <strong>記載項目</strong>
+              <ul>
+                <li>年収／職歴／勤続年数／職種</li>
+                <li>預貯金／有価証券／退職金見込み</li>
+                <li>既存借入（住宅ローン含む）</li>
+                <li>既存不動産保有状況</li>
+                <li>家族構成／配偶者所得／配偶者連帯保証可否</li>
+              </ul>
+              <strong>活用例：</strong>金融機関への提出資料／仲介業者への提示資料／自身の現状把握資料
+            </div>
+          </div>
+          <div class="work2-card ai">
+            <div class="work2-head"><div class="work2-icon">🤖</div><div><div class="work2-tag">ワーク ②</div><div class="work2-title">AI最適金融機関ツール</div></div></div>
+            <div class="work2-body">
+              <strong>入力：</strong>プロフィールシート＋物件資料<br>
+              <strong>出力：</strong>候補となる金融機関の提案<br>
+              <strong>用途：</strong>自分の属性と物件特性に応じた金融機関の絞り込み<br><br>
+              <strong>成果物：</strong>「完成プロフィールシート」＋「AI診断結果」＝「最適金融機関」
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑩-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク② ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>プロフィールシート作成のコツ</li>
+            <li>金融機関に出す書類としての「見え方」</li>
+            <li>AIツールの活用例・限界（あくまで目安、最終判断は人）</li>
+            <li>仲介業者への提示の流れ</li>
+            <li>自分の現在地を客観視することの意味</li>
+            <li>シートを更新するタイミング（年1回・転職時など）</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">プロフィールシートは何枚必要？</div><div class="qa-a">A4 1〜2枚が一般的</div></div>
+          <div class="qa-row"><div class="qa-q">AIの精度は？</div><div class="qa-a">入力情報の精度に依存</div></div>
+          <div class="qa-row"><div class="qa-q">公開して大丈夫？</div><div class="qa-a">提出先と用途に応じて、個人情報の扱いに注意</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑩-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワーク② ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">プロフィールシート</div><div class="term-def">自分の属性・資産・負債を一覧化した書類</div></div>
+          <div class="term-card"><div class="term-name">資産棚卸</div><div class="term-def">自分が保有する資産・負債を全部洗い出すこと</div></div>
+          <div class="term-card"><div class="term-name">連帯保証可否</div><div class="term-def">配偶者などが連帯保証人になれるか・なる意思があるかの確認</div></div>
+          <div class="term-card"><div class="term-name">既存借入</div><div class="term-def">すでに利用している住宅ローン・自動車ローン・カードローンなど</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑪  全体ロードマップ（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑪-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">全体ロードマップ</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">🏁 ➡️ 💰</div>
+        <div class="intro-headline">物件取得から運用まで <span class="accent">8ステップ</span></div>
+        <div class="intro-sub">スタートからゴールまでを俯瞰する</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>全体像を一度に掴む</li>
+            <li>各工程の名称・順序を理解</li>
+            <li>どこまで進んでいるか自己把握できるようになる</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑪-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">全体ロードマップ ── 8ステップ</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">スタートから<span class="accent">ゴール</span>まで</div>
+        </div>
+        <div class="rmap-v">
+          <div class="rstep-v"><div class="vn">①</div><div class="vicon">🏦</div><div class="vname">金融機関 選定</div><div class="vdesc">属性 × エリア × 物件種別</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">②</div><div class="vicon">📄</div><div class="vname">マイソク 取得</div><div class="vdesc">物件チラシのスクリーニング</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">③</div><div class="vicon">🔍</div><div class="vname">物件 選定</div><div class="vdesc">指標による絞り込み</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">④</div><div class="vicon">👀</div><div class="vname">内　覧</div><div class="vdesc">現地確認・周辺環境・修繕箇所</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">⑤</div><div class="vicon">📑</div><div class="vname">売買 契約</div><div class="vdesc">重要事項説明・契約書チェック</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">⑥</div><div class="vicon">💼</div><div class="vname">金消 契約</div><div class="vdesc">金銭消費貸借契約（ローン契約）</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v"><div class="vn">⑦</div><div class="vicon">🔑</div><div class="vname">決　済</div><div class="vdesc">所有権移転</div></div>
+          <div class="rarrow">▶</div>
+          <div class="rstep-v goal"><div class="vn">ゴール</div><div class="vicon">💰</div><div class="vname">家賃入金</div><div class="vdesc">三春ソリューションが客付け対応</div></div>
+        </div>
+        <div class="key-msg mini">
+          <span class="label">補　足</span>各ステップの所要期間・関わる人（仲介・銀行・司法書士など）の詳細は次の補足スライド参照。
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑪-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">全体ロードマップ ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>各ステップの所要期間の目安（金融機関選定1〜3ヶ月、契約〜決済1〜2ヶ月など）</li>
+            <li>ステップ間で起こりやすい遅延・トラブル</li>
+            <li>三春ソリューション等、客付け会社の活用</li>
+            <li>物件選定の指標（次郎式：表面利回り9%／8.5%下限など）</li>
+            <li>各ステップで関わる人（仲介・銀行・司法書士・建築士など）</li>
+            <li>重要事項説明の見るべきポイント</li>
+            <li>決済日の流れ（朝・銀行・司法書士同席など）</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">最初から最後まで何ヶ月？</div><div class="qa-a">一般的に3〜6ヶ月（条件次第）</div></div>
+          <div class="qa-row"><div class="qa-q">司法書士は自分で探す？</div><div class="qa-a">銀行指定が多い／物件次第</div></div>
+          <div class="qa-row"><div class="qa-q">客付け会社は選べる？</div><div class="qa-a">自分で選ぶ／管理会社経由など</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑪-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">全体ロードマップ ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">マイソク</div><div class="term-def">物件のチラシ・概要書</div></div>
+          <div class="term-card"><div class="term-name">金銭消費貸借契約（金消）</div><div class="term-def">金融機関とのローン契約</div></div>
+          <div class="term-card"><div class="term-name">決済</div><div class="term-def">物件代金の支払いと所有権移転を同日に行う手続き</div></div>
+          <div class="term-card"><div class="term-name">客付け</div><div class="term-def">入居者を募集・成約させること</div></div>
+          <div class="term-card"><div class="term-name">重要事項説明（重説）</div><div class="term-def">宅建士が契約前に行う物件・契約条件の説明</div></div>
+          <div class="term-card"><div class="term-name">次郎式</div><div class="term-def">表面利回り9%・8.5%下限とする物件スクリーニング基準</div></div>
+          <div class="term-card"><div class="term-name">所有権移転</div><div class="term-def">物件の名義を売主から買主へ変更する手続き</div></div>
+          <div class="term-card"><div class="term-name">司法書士</div><div class="term-def">登記手続きを代行する国家資格者</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+    <!-- ============================================================
+         CH⑫  ワークショップ（現地調査＋チェックリスト）（4スライド）
+         ============================================================ -->
+
+    <!-- ===== Slide ⑫-1 導入 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワークショップ ── 現地調査＋チェックリスト</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icons">📋 🚶 ✅</div>
+        <div class="intro-headline">机上の知識を<span class="accent">行動</span>に落とし込む</div>
+        <div class="intro-sub">数値目標付きの4タスク</div>
+        <div class="intro-purpose">
+          <div class="label">▼ このセクションで掴むこと</div>
+          <ul>
+            <li>数値目標付きの具体的アクションを示される</li>
+            <li>実践に必要なチェックリストを得る</li>
+            <li>「動く習慣」を作るゴールイメージ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">導　入</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑫-2 本体 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワークショップ</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="content-body">
+        <div class="content-title-row">
+          <div class="content-title">最低 <span class="accent">10件</span> の物件で「現地調査・内覧・契約」を実践</div>
+        </div>
+        <div class="key-msg" style="margin-bottom: 0.8vw;">
+          <span class="label">ワーク内容</span>下記3つの提供物（チェックリスト）を活用し、最低10件の物件に対して順に実行する。
+        </div>
+        <div class="trio">
+          <div class="trio-card"><div class="h">📦 提供物① 現地調査</div>現地調査チェックリスト<br><span style="font-size:0.85vw; color:var(--text-muted);">→ 周辺環境・相場感・ハザード確認</span></div>
+          <div class="trio-card"><div class="h">📦 提供物② 内　覧</div>内覧チェックリスト<br><span style="font-size:0.85vw; color:var(--text-muted);">→ 修繕箇所・設備・建物状態確認</span></div>
+          <div class="trio-card"><div class="h">📦 提供物③ 契　約</div>契約チェックリスト<br><span style="font-size:0.85vw; color:var(--text-muted);">→ 重要事項説明書・契約書ポイント</span></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype">本　体</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑫-3 講師ノート ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワークショップ ── 補足</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="note-body">
+        <div class="note-section">
+          <div class="h"><span class="ico">補足ポイント</span></div>
+          <ul>
+            <li>物件調査の効率的な回し方（1日何件回るか）</li>
+            <li>内覧時に必ず確認すべき項目（雨漏り・シロアリ・設備・周辺環境）</li>
+            <li>契約書・重説で見落としやすいポイント</li>
+            <li>30件回ることで見えてくるもの（相場感・物件の良し悪しの目）</li>
+            <li>一人で進める場合とエージェント支援を使う場合の違い</li>
+            <li>チェックリストは自分用にカスタマイズしていく</li>
+          </ul>
+        </div>
+        <div class="note-qa">
+          <div class="h"><span class="ico" style="background:var(--navy);">よくある質問</span></div>
+          <div class="qa-row"><div class="qa-q">30件は多すぎる？</div><div class="qa-a">数で目を養う意味を説明</div></div>
+          <div class="qa-row"><div class="qa-q">内覧で何分くらい？</div><div class="qa-a">30分〜1時間が目安</div></div>
+          <div class="qa-row"><div class="qa-q">業者さんに何聞く？</div><div class="qa-a">修繕履歴・空室期間・周辺の客付け状況</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype note">補　足</span></div>
+      </div>
+    </div></div>
+
+    <!-- ===== Slide ⑫-4 用語解説 ===== -->
+    <div class="slide"><div class="slide-fit">
+      <div class="top-bar">
+        <div class="top-bar-left"><div class="top-bar-title">ワークショップ ── 用語解説</div></div>
+        <div class="top-bar-right">バランス大家大学 ／ BOD</div>
+      </div>
+      <div class="term-body">
+        <div class="term-grid">
+          <div class="term-card"><div class="term-name">マイソク</div><div class="term-def">物件のチラシ・概要書（再掲）</div></div>
+          <div class="term-card"><div class="term-name">内覧</div><div class="term-def">物件を実際に見学すること</div></div>
+          <div class="term-card"><div class="term-name">重要事項説明書</div><div class="term-def">宅建士が交付・説明する書類</div></div>
+          <div class="term-card"><div class="term-name">チェックリスト</div><div class="term-def">確認すべき項目を一覧化した書類</div></div>
+          <div class="term-card"><div class="term-name">修繕箇所</div><div class="term-def">直す必要のある箇所（屋根・外壁・水回り・設備など）</div></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="brand">BOD ／ バランス大家大学</div>
+        <div><span class="stype term">用語解説</span></div>
+      </div>
+    </div></div>
+
+  </div>
+</div>
+
+<div class="nav">
+  <button id="prevBtn" title="前へ (←)" disabled="">◀</button>
+  <span class="slide-counter" id="counter">1 / 43</span>
+  <button id="nextBtn" title="次へ (→)">▶</button>
+  <button id="fullscreenBtn" title="全画面 (F)">⛶</button>
+</div>
+
+<div class="help-hint">← → : ページ送り　|　F : 全画面　|　Home/End : 最初/最後</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const fsBtn = document.getElementById('fullscreenBtn');
+  const progressBar = document.getElementById('progressBar');
+
+  // 各スライドの中身を .slide-fit でラップ (auto-fit用)
+  slides.forEach(slide => {
+    if (slide.querySelector(':scope > .slide-fit')) return;
+    const fit = document.createElement('div');
+    fit.className = 'slide-fit';
+    while (slide.firstChild) fit.appendChild(slide.firstChild);
+    slide.appendChild(fit);
+  });
+
+  function fitSlide(slide) {
+    if (!slide || !slide.classList.contains('active')) return;
+    const fit = slide.querySelector(':scope > .slide-fit');
+    if (!fit) return;
+    // リセット
+    fit.style.transform = '';
+    fit.style.width = '100%';
+    fit.style.height = '100%';
+    // 自然高さ計測 (height: auto で内側 flex の自然合計を取る)
+    fit.style.height = 'auto';
+    const naturalH = fit.scrollHeight;
+    const containerH = slide.clientHeight;
+    fit.style.height = '100%';
+    // scale 適用 (上限 1.5・下限 0.6 で暴走防止)
+    if (naturalH > 0 && containerH > 0) {
+      let scale = containerH / naturalH;
+      scale *= 0.98;
+      scale = Math.min(1.5, Math.max(0.6, scale));
+      if (scale > 0.99 && scale < 1.01) return;
+      fit.style.transform = `scale(${scale})`;
+      fit.style.width = `${100 / scale}%`;
+      fit.style.height = `${100 / scale}%`;
+    }
+  }
+
+  function show(idx) {
+    if (idx < 0 || idx >= total) return;
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${total}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progressBar.style.width = `${((current + 1) / total) * 100}%`;
+    requestAnimationFrame(() => fitSlide(slides[current]));
+  }
+
+  window.addEventListener('resize', () => {
+    fitSlide(slides[current]);
+  });
+  window.addEventListener('load', () => {
+    fitSlide(slides[current]);
+  });
+
+  prevBtn.addEventListener('click', () => show(current - 1));
+  nextBtn.addEventListener('click', () => show(current + 1));
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); show(0); }
+    else if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+    else if (e.key === 'f' || e.key === 'F') { fsBtn.click(); }
+  });
+
+  // ===== スマホ対応: タッチスワイプでページ送り =====
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+  const minSwipeDistance = 50;
+  document.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchMoved = false;
+  }, { passive: true });
+  document.addEventListener('touchmove', (e) => {
+    touchMoved = true;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (!touchMoved) return;
+    if (e.changedTouches.length !== 1) return;
+    // ナビボタン上のスワイプは無視
+    if (e.target.closest('.nav')) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < minSwipeDistance) return;
+    if (Math.abs(dy) > Math.abs(dx)) return; // 縦スワイプは無視
+    if (dx > 0) show(current - 1);
+    else show(current + 1);
+  }, { passive: true });
+
+  show(0);
+</script>
+
+
+
+<div class="glasp-extension-toaster" style="display: block; width: 320px; margin: unset; padding: unset; border: unset; border-radius: unset; outline: unset; background-color: unset; box-shadow: unset; position: fixed; top: 40px; right: 24px; z-index: 9999;"><template shadowrootmode="open"><div class="glasp-extension" style="font-family: inherit;"></div></template></div></body><div class="glasp-extension" style="display: block; width: unset; margin: unset; padding: unset; border: unset; border-radius: unset; outline: unset; background-color: unset; box-shadow: unset; position: fixed; bottom: 16px; right: 16px; z-index: 9999;"><div class="glasp-extension" style="font-family: inherit;"></div></div></html>
